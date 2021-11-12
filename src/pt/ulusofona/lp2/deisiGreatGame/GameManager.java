@@ -14,7 +14,7 @@ public class GameManager {
     }
 
     public String getImagePng(int position){
-        return "";
+        return null;
     }
 
     public ArrayList<Programmer> getProgrammers(){
