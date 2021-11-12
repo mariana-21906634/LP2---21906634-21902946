@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 public class GameManager {
 
+    ArrayList<Programmer> programmers;
+
     public GameManager(){}
 
     public boolean createInitialBoard(String[][] playerInfo, int boardSize){
@@ -16,7 +18,7 @@ public class GameManager {
     }
 
     public ArrayList<Programmer> getProgrammers(){
-        return null;
+        return programmers;
     }
 
     public ArrayList<Programmer> getProgrammers(int position){
