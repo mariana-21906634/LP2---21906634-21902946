@@ -2,10 +2,12 @@ package pt.ulusofona.lp2.deisiGreatGame;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class GameManager {
 
-    ArrayList<Programmer> programmers;
+    ArrayList<Programmer> programmers = new ArrayList<>();
+    int tamanhoTab;
 
     public GameManager(){}
 
@@ -14,7 +16,11 @@ public class GameManager {
     }
 
     public String getImagePng(int position){
-        return null;
+        if(position==tamanhoTab){
+            return "glory.png";
+        }else{
+            return null;
+        }
     }
 
     public ArrayList<Programmer> getProgrammers(){
@@ -22,7 +28,17 @@ public class GameManager {
     }
 
     public ArrayList<Programmer> getProgrammers(int position){
-        return null;
+        ArrayList<Programmer> programadores = new ArrayList<>();
+        if(position > 0 && position < tamanhoTab){
+            for(Programmer programmer:programmers){
+                if(programmer.getPos()==position){
+                    programadores.add(programmer);
+                }
+            }
+            return programadores;
+        }else{
+            return null;
+        }
     }
 
     public int getCurrentPlayerID(){

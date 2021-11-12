@@ -23,6 +23,10 @@ public class Programmer {
         this.estado = estado;
     }
 
+    public int getPos() {
+        return pos;
+    }
+
     public int getId() {
         return id;
     }
