@@ -13,7 +13,7 @@ public class Programmer {
         this.linguagemFavorita = linguagemFavorita;
         this.color = color;
         this.pos = 1;
-        this.estado ="Em Jogo";
+        this.estado = "Em Jogo";
     }
 
     public int getId() {
