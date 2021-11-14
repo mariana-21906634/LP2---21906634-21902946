@@ -2,7 +2,6 @@ package pt.ulusofona.lp2.deisiGreatGame;
 
 import javax.swing.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class GameManager {
 
@@ -18,14 +17,15 @@ public class GameManager {
     public String getImagePng(int position){
         if(position==tamanhoTab){
             return "glory.png";
-        }else{
-            return null;
         }
+        if(position > tamanhoTab){
+            return null;
+        }return "blank.png";
     }
 
     public ArrayList<Programmer> getProgrammers(){
         return programmers;
-    }
+    } //FEITO
 
     public ArrayList<Programmer> getProgrammers(int position){
         ArrayList<Programmer> programadores = new ArrayList<>();
@@ -39,14 +39,17 @@ public class GameManager {
         }else{
             return null;
         }
-    }
+    }  // ACHO QUE FEITO
 
     public int getCurrentPlayerID(){
         return 0;
     }
 
     public boolean moveCurrentPlayer(int nrPositions){
-        return false;
+        if(nrPositions < 1 || nrPositions > 6){
+            return false;
+        }
+        return true;
     }
 
     public boolean gameIsOver(){
@@ -59,5 +62,5 @@ public class GameManager {
 
     public JPanel getAuthorsPanel(){
         return null;
-    }
+    } //FEITO
 }
