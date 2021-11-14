@@ -33,7 +33,19 @@ public class GameManager {
         }
         if(position > tamanhoTab){
             return null;
-        }return "blank.png";
+        }
+        for (int i = 0; i< programmers.size(); i++){
+            if (programmers.get(i).getPos() == position){
+                return switch (programmers.get(i).getColor()){
+                    case PURPLE -> "playerPurple.png";
+                    case BLUE -> "playerBlue.png";
+                    case GREEN -> "playerGreen.png";
+                    case BROWN -> "playerBrown.png";
+                };
+            }
+
+        }
+        return "blank.png";
     }
 
     public ArrayList<Programmer> getProgrammers(){

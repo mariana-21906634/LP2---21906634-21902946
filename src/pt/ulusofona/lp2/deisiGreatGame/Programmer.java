@@ -12,7 +12,7 @@ public class Programmer {
         this.name = name;
         this.linguagemFavorita = linguagemFavorita;
         this.color = color;
-        this.pos = pos;
+        this.pos = 1;
         this.estado = "Em Jogo";
     }
 
@@ -28,14 +28,16 @@ public class Programmer {
         return this.pos;
     }
 
-
+    public void setPos(int pos) {
+        this.pos = pos;
+    }
 
     public ProgrammerColor getColor() {
-        return switch (color.toLowerCase()) {
-            case "purple" -> ProgrammerColor.PURPLE;
-            case "blue" -> ProgrammerColor.BLUE;
-            case "brown" -> ProgrammerColor.BROWN;
-            case "green" -> ProgrammerColor.GREEN;
+        return switch (color.toUpperCase()) {
+            case "PURPLE" -> ProgrammerColor.PURPLE;
+            case "BLUE" -> ProgrammerColor.BLUE;
+            case "BROWN" -> ProgrammerColor.BROWN;
+            case "GREEN" -> ProgrammerColor.GREEN;
             default -> null;
         };
     }
