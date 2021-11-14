@@ -3,44 +3,47 @@ package pt.ulusofona.lp2.deisiGreatGame;
 public class Programmer {
 
     int id, pos;
-    ProgrammerColor color;
-    String name, linguagemFavorita, estado;
+    String name, linguagemFavorita, estado, color;
 
     public Programmer(){}
 
-    public Programmer(int id, String name, ProgrammerColor color) {
+    public Programmer(int id, String name, String linguagemFavorita, String color) {
         this.id = id;
-        this.name = name;
-        this.color = color;
-    }
-
-    public Programmer(int id, int pos, ProgrammerColor color, String name, String linguagemFavorita, String estado) {
-        this.id = id;
-        this.pos = pos;
-        this.color = color;
         this.name = name;
         this.linguagemFavorita = linguagemFavorita;
-        this.estado = estado;
-    }
-
-    public int getPos() {
-        return pos;
+        this.color = color;
+        this.pos = pos;
+        this.estado = "Em Jogo";
     }
 
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
-    public ProgrammerColor getColor() {
-        return color;
+    public int getPos() {
+        return this.pos;
     }
+
+
+
+    public ProgrammerColor getColor() {
+        return switch (color.toLowerCase()) {
+            case "purple" -> ProgrammerColor.PURPLE;
+            case "blue" -> ProgrammerColor.BLUE;
+            case "brown" -> ProgrammerColor.BROWN;
+            case "green" -> ProgrammerColor.GREEN;
+            default -> null;
+        };
+    }
+
+
 
     @Override
     public String toString() {
-        return id + " | " + name + " | " + pos + " | " + linguagemFavorita + " | " + estado;
+        return this.id + " | " + this.name + " | " + this.pos + " | " + this.linguagemFavorita + " | " + this.estado;
     }
 }
