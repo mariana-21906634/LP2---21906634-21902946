@@ -10,6 +10,7 @@ public class GameManager {
     ArrayList<Programmer> programmers = new ArrayList<>();
     ArrayList<Integer> jogada = new ArrayList<>();
     int tamanhoTab, nrTurnos;
+    Programmer winner;
 
     public GameManager(){}
 
@@ -50,24 +51,20 @@ public class GameManager {
 
     public ArrayList<Programmer> getProgrammers(){
         return programmers;
-    } //FEITO
+    }
 
     public ArrayList<Programmer> getProgrammers(int position){
         ArrayList<Programmer> programadores = new ArrayList<>();
-        if(position > 0 && position < tamanhoTab){
             for(Programmer programmer:programmers){
                 if(programmer.getPos()==position){
                     programadores.add(programmer);
                 }
             }
             return programadores;
-        }else{
-            return null;
-        }
-    }  // ACHO QUE FEITO
+    }
 
     public int getCurrentPlayerID(){
-        return 0;
+        return jogada.get(0);
     }
 
     public boolean moveCurrentPlayer(int nrPositions){
@@ -78,11 +75,35 @@ public class GameManager {
     }
 
     public boolean gameIsOver(){
+        for(Programmer programmer:programmers){
+            if(programmer.getPos()==tamanhoTab){
+                winner = programmer;
+                return true;
+            }
+        }
         return false;
     }
 
     public ArrayList<String> getGameResults(){
-        return null;
+        ArrayList<String> gameResults = new ArrayList<>();
+        gameResults.add("O GRANDE JOGO DO DEISI");
+        gameResults.add("");
+        gameResults.add("NR. DE TURNOS");
+        gameResults.add(Integer.toString(nrTurnos));
+        gameResults.add("");
+        gameResults.add("VENCEDOR");
+        gameResults.add(winner.getName());
+        gameResults.add("");
+        gameResults.add("RESTANTES");
+        Collections.sort(programmers, new Sortbypos());
+        for(Programmer programmer:programmers){
+            if (!programmer.getName().equals(winner.getName())) {
+                if (!gameResults.contains(programmer.getName() + " " + programmer.getPos())) {
+                    gameResults.add(programmer.getName() + " " + programmer.getPos());
+                }
+            }
+        }
+        return gameResults;
     }
 
     public JPanel getAuthorsPanel(){
