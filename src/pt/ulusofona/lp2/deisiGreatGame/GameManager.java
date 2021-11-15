@@ -71,12 +71,16 @@ public class GameManager {
         if(nrPositions < 1 || nrPositions > 6){
             return false;
         }
-        int posAtualPlayer = programmers.get(jogada.get(0)).getPos();
-        if (posAtualPlayer + nrPositions > tamanhoTab){
-            int excess = tamanhoTab - posAtualPlayer - nrPositions;
-            programmers.get(jogada.get(0)).setPos(tamanhoTab - Math.abs(excess));
-        }else{
-            programmers.get(jogada.get(0)).setPos(posAtualPlayer + nrPositions);
+        for(Programmer programmer : programmers) {
+            if(programmer.getId()==jogada.get(0)) {
+                int posAtualPlayer = programmer.getPos();
+                if (posAtualPlayer + nrPositions > tamanhoTab) {
+                    int excess = tamanhoTab - posAtualPlayer - nrPositions;
+                    programmer.setPos(tamanhoTab - Math.abs(excess));
+                } else {
+                    programmer.setPos(posAtualPlayer + nrPositions);
+                }
+            }
         }
         nrTurnos++;
         jogada.add(jogada.get(0));

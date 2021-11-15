@@ -1,5 +1,7 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
+import java.util.Arrays;
+
 public class Programmer {
 
     int id, pos;
@@ -11,9 +13,18 @@ public class Programmer {
         this.id = id;
         this.name = name;
         this.linguagemFavorita = linguagemFavorita;
+        lingCorrecao();
         this.color = color;
         this.pos = 1;
         this.estado ="Em Jogo";
+    }
+
+    public void lingCorrecao(){
+        String[] linguagens = this.linguagemFavorita.split(";");
+        if (linguagens.length > 1) {
+            Arrays.sort(linguagens);
+            this.linguagemFavorita = String.join("; ", linguagens);
+        }
     }
 
     public int getId() {
