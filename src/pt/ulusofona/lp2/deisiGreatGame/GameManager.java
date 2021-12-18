@@ -13,6 +13,7 @@ public class GameManager {
     int tamanhoTab, nrTurnos;
     Programmer winner;
 
+
     public GameManager(){
 
     }
