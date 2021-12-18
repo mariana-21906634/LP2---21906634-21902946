@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 public class GameManager {
 
@@ -28,6 +29,11 @@ public class GameManager {
         return true;
     }
 
+    public boolean createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools){
+        return false;
+    }
+
+
     public String getImagePng(int position){
         if(position==tamanhoTab){
             return "glory.png";
@@ -49,11 +55,15 @@ public class GameManager {
         return "blank.png";
     }
 
-    public ArrayList<Programmer> getProgrammers(){
+    public String getTitle(int position){
+        return null;
+    }
+
+    public List<Programmer> getProgrammers(boolean includeDefeated){
         return programmers;
     }
 
-    public ArrayList<Programmer> getProgrammers(int position){
+    public List<Programmer> getProgrammers(int position){
         ArrayList<Programmer> programadores = new ArrayList<>();
             for(Programmer programmer:programmers){
                 if(programmer.getPos()==position){
@@ -61,6 +71,10 @@ public class GameManager {
                 }
             }
             return programadores;
+    }
+
+    public String getProgrammersInfo(){
+        return null;
     }
 
     public int getCurrentPlayerID(){
@@ -88,6 +102,10 @@ public class GameManager {
         return true;
     }
 
+    public String reactToAbyssOrTool(){
+        return null;
+    }
+
     public boolean gameIsOver(){
         for(Programmer programmer:programmers){
             if(programmer.getPos()==tamanhoTab){
@@ -98,7 +116,7 @@ public class GameManager {
         return false;
     }
 
-    public ArrayList<String> getGameResults(){
+    public List<String> getGameResults(){
         ArrayList<String> gameResults = new ArrayList<>();
         gameResults.add("O GRANDE JOGO DO DEISI");
         gameResults.add("");
