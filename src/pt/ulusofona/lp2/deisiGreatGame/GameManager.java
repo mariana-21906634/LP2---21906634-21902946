@@ -13,7 +13,9 @@ public class GameManager {
     int tamanhoTab, nrTurnos;
     Programmer winner;
 
-    public GameManager(){}
+    public GameManager(){
+
+    }
 
     public boolean createInitialBoard(String[][] playerInfo, int boardSize){
         reset();
