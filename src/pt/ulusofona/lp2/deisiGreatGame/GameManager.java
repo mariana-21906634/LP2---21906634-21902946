@@ -1,14 +1,13 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class GameManager {
 
     ArrayList<Programmer> programmers = new ArrayList<>();
+    HashMap<Integer, ArrayList<Integer>> tools = new HashMap<>();
+    HashMap<Integer, Integer> posID = new HashMap<>();
     ArrayList<Integer> jogada = new ArrayList<>();
     int tamanhoTab, nrTurnos;
     Programmer winner;
