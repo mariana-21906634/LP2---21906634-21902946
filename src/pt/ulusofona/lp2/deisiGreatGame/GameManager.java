@@ -156,7 +156,7 @@ public class GameManager {
 
                         switch (a.getValue().getIdTipo()) {
                             case 0 -> {
-                                if (!tools.get(4).contains(jogada.get(0)) && !tools.get(5).contains(jogada.get(0))) {   // ISTO TA MAL
+                                if (!tools.get(4).contains(jogada.get(0)) || !tools.get(5).contains(jogada.get(0))) {   // ISTO TA MAL
                                     programmers.get(jogada.get(0)).setPos(posAtual - 1);
                                     explicacao = "O programador recua 1 casa.";
                                 } else {
@@ -170,7 +170,7 @@ public class GameManager {
                                 }
                             } // erro de sintaxe - feito
                             case 1 -> {
-                                if (!tools.get(2).contains(jogada.get(0)) && !tools.get(5).contains(jogada.get(0))) {
+                                if (!tools.get(2).contains(jogada.get(0)) || !tools.get(5).contains(jogada.get(0))) {
                                     programmers.get(jogada.get(0)).setPos(posAtual - (dados / 2));
                                     int dado = dados/2;
                                     explicacao = "O programador recua " + dado + " casas.";
@@ -185,7 +185,7 @@ public class GameManager {
                                 }
                             } // erro de logica - feito
                             case 2 -> {
-                                if (!tools.get(3).contains(jogada.get(0)) && !tools.get(5).contains(jogada.get(0))) {
+                                if (!tools.get(3).contains(jogada.get(0)) || !tools.get(5).contains(jogada.get(0))) {
                                     programmers.get(jogada.get(0)).setPos(posAtual - 2);
                                     explicacao = "O programador recua 2 casas.";
                                 } else {
@@ -199,7 +199,7 @@ public class GameManager {
                                 }
                             } // exception - feito
                             case 3 -> {
-                                if (!tools.get(3).contains(jogada.get(0)) && !tools.get(5).contains(jogada.get(0))) {
+                                if (!tools.get(3).contains(jogada.get(0)) || !tools.get(5).contains(jogada.get(0))) {
                                     programmers.get(jogada.get(0)).setPos(posAtual - 3);
                                     explicacao = "O programador recua 3 casas.";
                                 } else {
