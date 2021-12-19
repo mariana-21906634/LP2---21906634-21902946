@@ -138,6 +138,7 @@ public class GameManager {
         return true;
     }  //TA QUASE
 
+
     public String reactToAbyssOrTool() {
         int posAtual = programmers.get(jogada.get(0)).getPos();
         String explicacao = null;
