@@ -62,7 +62,7 @@ public class GameManager {
         if(position > tamanhoTab){
             return null;
         }
-        for (int i = 0; i< programmers.size(); i++){     //se aqui muda ou nao
+        for (int i = 1; i<= programmers.size(); i++){
             if (programmers.get(i).getPos() == position){
                 return switch (programmers.get(i).getColor()){
                     case PURPLE -> "playerPurple.png";
@@ -91,18 +91,17 @@ public class GameManager {
     }  //FEITO
 
     public List<Programmer> getProgrammers(boolean includeDefeated){
-        /*List<Programmer> undefeated = new ArrayList<>();
+        List<Programmer> undefeated = new ArrayList<>();
         if (includeDefeated) {
-            return new ArrayList<>(jogadores.values());
+            ArrayList<Programmer> programa = new ArrayList<>(programmers.values());
+            return programa;
         }
-        for (Map.Entry<Integer, Programmer> j : jogadores.entrySet()) {
-            if (j.getValue().getEstado().equals("Em Jogo")) {
-                undefeated.add(j.getValue());
+        for (Map.Entry<Integer, Programmer> jogo : programmers.entrySet()) {
+            if (jogo.getValue().getEstado().equals("Em Jogo")) {
+                undefeated.add(jogo.getValue());
             }
         }
         return undefeated;
-        */
-        return null;
     }
 
     public List<Programmer> getProgrammers(int position){
@@ -144,14 +143,20 @@ public class GameManager {
     }
 
     public boolean gameIsOver(){
-        for(Map.Entry<Integer, Integer> p : posID.entrySet()){
-            if(p.getValue()==tamanhoTab){
-                winner = programmers.get(p.getKey());
+        int i = 0;
+        for(Map.Entry<Integer, Integer> programa : posID.entrySet()){
+            if(programa.getValue()==tamanhoTab){
+                winner = programmers.get(programa.getKey());
                 return true;
             }
         }
-        return false;
-    }
+        for (Map.Entry<Integer, Programmer> jogo : programmers.entrySet()) {
+            if (jogo.getValue().getEstado().equals("Em Jogo")) {
+                i++;
+            }
+        }
+        return i == 1;
+    }  //FEITO
 
     public List<String> getGameResults(){
         ArrayList<String> gameResults = new ArrayList<>();
