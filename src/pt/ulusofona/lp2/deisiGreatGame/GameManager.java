@@ -122,7 +122,23 @@ public class GameManager {
     }  //FEITO
 
     public String getProgrammersInfo(){
-        return null;
+        StringBuilder informacao = new StringBuilder();
+        for(Map.Entry<Integer, Programmer> programmer : programmers.entrySet()){
+            if(informacao.isEmpty()){
+                informacao.append(programmer.getValue().getName()).append(" : ");
+            }else{
+                informacao.append(" | ").append(programmer.getValue().getName()).append(" : ");
+            }
+            if(programmer.getValue().getFerramentas().isEmpty()){
+                informacao.append("No tools");
+            }else{
+                for(Map.Entry<Integer, AbyssOrTool> ferramentas : programmer.getValue().getFerramentas().entrySet()){
+                    informacao.append(ferramentas).append(";");
+                }
+                informacao.deleteCharAt(informacao.length()-1);
+            }
+        }
+        return informacao.toString();
     }
 
     public int getCurrentPlayerID(){
@@ -143,7 +159,7 @@ public class GameManager {
         }
         posID.put(jogada.get(0), programmers.get(jogada.get(0)).getPos());
         return true;
-    }  //TA QUASE
+    }
 
     public String reactToAbyssOrTool() {
         int posAtual = programmers.get(jogada.get(0)).getPos();
@@ -156,10 +172,11 @@ public class GameManager {
 
                         switch (a.getValue().getIdTipo()) {
                             case 0 -> {
-                                if (!tools.get(4).contains(jogada.get(0)) || !tools.get(5).contains(jogada.get(0))) {   // ISTO TA MAL
+                                if (!tools.get(4).contains(jogada.get(0)) && !tools.get(5).contains(jogada.get(0))) {   // ISTO TA MAL
                                     programmers.get(jogada.get(0)).setPos(posAtual - 1);
                                     explicacao = "O programador recua 1 casa.";
                                 } else {
+                                    explicacao = "O abismo não tem efeito sobre ti.";
                                     if (tools.get(4).contains(jogada.get(0))) {
                                         tools.get(4).remove(jogada.get(0));
                                         programmers.get(jogada.get(0)).removeFerramenta(4);
@@ -170,11 +187,12 @@ public class GameManager {
                                 }
                             } // erro de sintaxe - feito
                             case 1 -> {
-                                if (!tools.get(2).contains(jogada.get(0)) || !tools.get(5).contains(jogada.get(0))) {
+                                if (!tools.get(2).contains(jogada.get(0)) && !tools.get(5).contains(jogada.get(0))) {
                                     programmers.get(jogada.get(0)).setPos(posAtual - (dados / 2));
                                     int dado = dados/2;
                                     explicacao = "O programador recua " + dado + " casas.";
                                 } else {
+                                    explicacao = "O abismo não tem efeito sobre ti.";
                                     if (tools.get(2).contains(jogada.get(0))) {
                                         tools.get(2).remove(jogada.get(0));
                                         programmers.get(jogada.get(0)).removeFerramenta(2);
@@ -185,10 +203,11 @@ public class GameManager {
                                 }
                             } // erro de logica - feito
                             case 2 -> {
-                                if (!tools.get(3).contains(jogada.get(0)) || !tools.get(5).contains(jogada.get(0))) {
+                                if (!tools.get(3).contains(jogada.get(0)) && !tools.get(5).contains(jogada.get(0))) {
                                     programmers.get(jogada.get(0)).setPos(posAtual - 2);
                                     explicacao = "O programador recua 2 casas.";
                                 } else {
+                                    explicacao = "O abismo não tem efeito sobre ti.";
                                     if (tools.get(3).contains(jogada.get(0))) {
                                         tools.get(3).remove(jogada.get(0));
                                         programmers.get(jogada.get(0)).removeFerramenta(3);
@@ -199,10 +218,11 @@ public class GameManager {
                                 }
                             } // exception - feito
                             case 3 -> {
-                                if (!tools.get(3).contains(jogada.get(0)) || !tools.get(5).contains(jogada.get(0))) {
+                                if (!tools.get(3).contains(jogada.get(0)) && !tools.get(5).contains(jogada.get(0))) {
                                     programmers.get(jogada.get(0)).setPos(posAtual - 3);
                                     explicacao = "O programador recua 3 casas.";
                                 } else {
+                                    explicacao = "O abismo não tem efeito sobre ti.";
                                     if (tools.get(3).contains(jogada.get(0))) {
                                         tools.get(3).remove(jogada.get(0));
                                         programmers.get(jogada.get(0)).removeFerramenta(3);
@@ -221,6 +241,7 @@ public class GameManager {
                                     programmers.get(jogada.get(0)).setPos(posAtual - dados);
                                     explicacao = "O programador recua até à casa onde estava antes de chegar a esta casa.";
                                 } else {
+                                    explicacao = "O abismo não tem efeito sobre ti.";
                                     tools.get(0).remove(jogada.get(0));
                                     programmers.get(jogada.get(0)).removeFerramenta(0);
                                 }
@@ -231,6 +252,7 @@ public class GameManager {
                                     programmers.get(jogada.get(0)).setPos(posAtual); // jogada default
                                     explicacao = "O programador recua para a posição onde estava há 2 movimentos atrás.";
                                 } else {
+                                    explicacao = "O abismo não tem efeito sobre ti.";
                                     tools.get(1).remove(jogada.get(0));
                                     programmers.get(jogada.get(0)).removeFerramenta(1);
                                 }
@@ -238,6 +260,7 @@ public class GameManager {
 
                             case 7 -> {
                                 programmers.get(jogada.get(0)).setEstado("Derrotado");
+                                posID.put(jogada.get(0), programmers.get(jogada.get(0)).getPos());
                                 explicacao = "O programador perde imediatamente o jogo.";
                                 jogada.remove(0);
                                 nrTurnos++;
@@ -249,6 +272,7 @@ public class GameManager {
                                     programmers.get(jogada.get(0)).setPos(posAtual); // jogada default
                                     explicacao = "O programador fica preso na casa onde está até que lá apareça outro programador para o ajuda";
                                 } else {
+                                    explicacao = "O abismo não tem efeito sobre ti.";
                                     tools.get(1).remove(jogada.get(0));
                                     programmers.get(jogada.get(0)).removeFerramenta(1);
                                 }
@@ -268,6 +292,8 @@ public class GameManager {
                                         programmers.get(id).setPos(posAtual - 3);
                                     }
                                     explicacao = "Todos os jogadores nessa casa recuam 3 casas";
+                                }else{
+                                    explicacao = "Se outro jogador cair nesta casa, recuam os dois 3 casas.";
                                 }
                             } // Segmentation fault - feito
                         }
@@ -292,6 +318,7 @@ public class GameManager {
                 }
             }
         }
+        posID.put(jogada.get(0), programmers.get(jogada.get(0)).getPos());
         jogada.add(jogada.remove(0));
         nrTurnos++;
         return explicacao;
