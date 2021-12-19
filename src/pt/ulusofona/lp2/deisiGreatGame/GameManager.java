@@ -124,7 +124,7 @@ public class GameManager {
     public String getProgrammersInfo(){
         StringBuilder informacao = new StringBuilder();
         for(Map.Entry<Integer, Programmer> programmer : programmers.entrySet()){
-            if(informacao.isEmpty()){
+            if(informacao.length() != 0){
                 informacao.append(programmer.getValue().getName()).append(" : ");
             }else{
                 informacao.append(" | ").append(programmer.getValue().getName()).append(" : ");
