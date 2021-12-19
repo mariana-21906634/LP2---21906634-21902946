@@ -145,7 +145,6 @@ public class GameManager {
         return true;
     }  //TA QUASE
 
-
     public String reactToAbyssOrTool() {
         int posAtual = programmers.get(jogada.get(0)).getPos();
         String explicacao = null;
@@ -159,7 +158,7 @@ public class GameManager {
                             case 0 -> {
                                 if (!tools.get(4).contains(jogada.get(0)) && !tools.get(5).contains(jogada.get(0))) {
                                     programmers.get(jogada.get(0)).setPos(posAtual - 1);
-                                    explicacao = "Recua 1 casa";
+                                    explicacao = "O programador recua 1 casa.";
                                 } else {
                                     if (tools.get(4).contains(jogada.get(0))) {
                                         tools.get(4).remove(jogada.get(0));
@@ -174,7 +173,7 @@ public class GameManager {
                                 if (!tools.get(2).contains(jogada.get(0)) && !tools.get(5).contains(jogada.get(0))) {
                                     programmers.get(jogada.get(0)).setPos(posAtual - (dados / 2));
                                     int dado = dados/2;
-                                    explicacao = "Recua " + dado + " casa(s)";
+                                    explicacao = "O programador recua " + dado + " casas.";
                                 } else {
                                     if (tools.get(2).contains(jogada.get(0))) {
                                         tools.get(2).remove(jogada.get(0));
@@ -188,7 +187,7 @@ public class GameManager {
                             case 2 -> {
                                 if (!tools.get(3).contains(jogada.get(0)) && !tools.get(5).contains(jogada.get(0))) {
                                     programmers.get(jogada.get(0)).setPos(posAtual - 2);
-                                    explicacao = "Recua 2 casas";
+                                    explicacao = "O programador recua 2 casas.";
                                 } else {
                                     if (tools.get(3).contains(jogada.get(0))) {
                                         tools.get(3).remove(jogada.get(0));
@@ -202,7 +201,7 @@ public class GameManager {
                             case 3 -> {
                                 if (!tools.get(3).contains(jogada.get(0)) && !tools.get(5).contains(jogada.get(0))) {
                                     programmers.get(jogada.get(0)).setPos(posAtual - 3);
-                                    explicacao = "Recua 3 casas";
+                                    explicacao = "O programador recua 3 casas.";
                                 } else {
                                     if (tools.get(3).contains(jogada.get(0))) {
                                         tools.get(3).remove(jogada.get(0));
@@ -215,12 +214,12 @@ public class GameManager {
                             } // file not found exception - feito
                             case 4 -> {
                                 programmers.get(jogada.get(0)).setPos(1);
-                                explicacao = "Este abismo faz com que voltes para a primeira casa do jogo";
+                                explicacao = "O programador volta à primeira casa do jogo.";
                             } // Crash (aka Rebentanço) - feito
                             case 5 -> {
                                 if (!tools.get(0).contains(jogada.get(0))) {
                                     programmers.get(jogada.get(0)).setPos(posAtual - dados);
-                                    explicacao = "Este abismo faz com que recue até à casa onde estava antes de chegar a esta casa.";
+                                    explicacao = "O programador recua até à casa onde estava antes de chegar a esta casa.";
                                 } else {
                                     tools.get(0).remove(jogada.get(0));
                                     programmers.get(jogada.get(0)).removeFerramenta(0);
@@ -230,6 +229,7 @@ public class GameManager {
                             case 6 -> {
                                 if (!tools.get(1).contains(jogada.get(0))) {
                                     programmers.get(jogada.get(0)).setPos(posAtual); // jogada default
+                                    explicacao = "O programador recua para a posição onde estava há 2 movimentos atrás.";
                                 } else {
                                     tools.get(1).remove(jogada.get(0));
                                     programmers.get(jogada.get(0)).removeFerramenta(1);
@@ -238,6 +238,7 @@ public class GameManager {
 
                             case 7 -> {
                                 programmers.get(jogada.get(0)).setEstado("Derrotado");
+                                explicacao = "O programador perde imediatamente o jogo.";
                                 jogada.remove(0);
                                 nrTurnos++;
                                 return explicacao;
@@ -245,8 +246,8 @@ public class GameManager {
 
                             case 8 -> {
                                 if (!tools.get(1).contains(jogada.get(0))) {
-
                                     programmers.get(jogada.get(0)).setPos(posAtual); // jogada default
+                                    explicacao = "O programador fica preso na casa onde está até que lá apareça outro programador para o ajuda";
                                 } else {
                                     tools.get(1).remove(jogada.get(0));
                                     programmers.get(jogada.get(0)).removeFerramenta(1);
@@ -266,7 +267,7 @@ public class GameManager {
                                     for (int id : iDs) {
                                         programmers.get(id).setPos(posAtual - 3);
                                     }
-                                    explicacao = "Todos os jogadores nesta casa recuam 3 casas";
+                                    explicacao = "Todos os jogadores nessa casa recuam 3 casas";
                                 }
                             } // Segmentation fault - feito
                         }
@@ -285,7 +286,7 @@ public class GameManager {
                                 case 5 -> explicacao = "Ajuda do professor - tem o mesmo efeito que as seguintes ferramentas (Testes unitários, IDE e Tratamento de excepções)";
                             }
                         } else {
-                            explicacao = "Que pena, já tens uma ferramenta igual a esta";
+                            explicacao = "Já existe uma ferramenta igual a esta";
                         }
                     }
                 }
