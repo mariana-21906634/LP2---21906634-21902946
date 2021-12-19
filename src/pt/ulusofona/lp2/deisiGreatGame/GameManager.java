@@ -10,8 +10,8 @@ public class GameManager {
     HashMap<Integer, ArrayList<Integer>> tools = new HashMap<>();
     HashMap<Integer, Integer> posID = new HashMap<>();
     ArrayList<Integer> jogada = new ArrayList<>();
-    int tamanhoTab, nrTurnos, dados = 0; //Add on last commit;
-    Programmer winner = new Programmer(); //Add on last commit;
+    int tamanhoTab, nrTurnos, dados;
+    Programmer winner;
 
 
     public GameManager(){
@@ -19,7 +19,7 @@ public class GameManager {
     }
 
     public boolean createInitialBoard(String[][] playerInfo, int boardSize){
-        //reset(); alteração no ultimo commit
+        reset();
         if(playerInfo.length < 2 || playerInfo.length > 4 || boardSize < playerInfo.length*2){
             return false;
         }
@@ -343,5 +343,7 @@ public class GameManager {
         jogada.clear();
         posID.clear();
         nrTurnos = 1;
+        tamanhoTab = 0;
+        dados = 0;
     }  //FEITO
 }
