@@ -10,7 +10,7 @@ public class TestMoveCurrentPlayer {
     @Test
     public void testMoveCurrentPlayer1() {
         jogo.tamanhoTab = 79;
-        jogo.programmers.add(new Programmer(1, "Tester", "Java", "Purple"));
+        jogo.programmers.put(1, new Programmer(1, "Tester", "Java", "Purple"));
         jogo.jogada.add(1);
 
         boolean atual = jogo.moveCurrentPlayer(0);
@@ -22,7 +22,7 @@ public class TestMoveCurrentPlayer {
     @Test
     public void testMoveCurrentPlayer2() {
         jogo.tamanhoTab = 79;
-        jogo.programmers.add(new Programmer(1, "Tester", "Java", "Purple"));
+        jogo.programmers.put(1, new Programmer(1, "Tester", "Java", "Purple"));
         jogo.jogada.add(1);
 
 
@@ -35,7 +35,7 @@ public class TestMoveCurrentPlayer {
     @Test
     public void testMoveCurrentPlayer3() {
         jogo.tamanhoTab = 79;
-        jogo.programmers.add(new Programmer(1, "Tester", "Java", "Purple"));
+        jogo.programmers.put(1, new Programmer(1, "Tester", "Java", "Purple"));
         jogo.jogada.add(1);
 
 
@@ -48,7 +48,7 @@ public class TestMoveCurrentPlayer {
     @Test
     public void testMoveCurrentPlayer4() {
         jogo.tamanhoTab = 79;
-        jogo.programmers.add(new Programmer(1, "Tester", "Java", "Purple"));
+        jogo.programmers.put(1, new Programmer(1, "Tester", "Java", "Purple"));
         jogo.jogada.add(1);
 
 
