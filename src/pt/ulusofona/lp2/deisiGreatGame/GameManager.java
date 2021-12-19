@@ -355,7 +355,5 @@ public class GameManager {
         jogada.clear();
         posID.clear();
         nrTurnos = 1;
-        //tamanhoTab = 0;
-        dados = 0;
     }  //FEITO
 }

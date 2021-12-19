@@ -1,6 +1,10 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 
 public class TestMoveCurrentPlayer {
@@ -26,6 +30,17 @@ public class TestMoveCurrentPlayer {
         System.out.println(jogo.tamanhoTab);
        // assertEquals("Expected result is " + 2 + "but was " + test1.size(), 2, test1.size());
         assertEquals("Expected 2 result is " + 4 + "but was " + test2.size(), 4, test2.size());
+    }
+
+    @Test
+    public void testMultipleTools() {
+        List<AbyssOrTool> lista = new ArrayList<>();
+        lista.add(new AbyssOrTool(1,1,10));
+        lista.add(new AbyssOrTool(2,1,11));
+        jogo.programmers.put(Integer.parseInt("3"), new Programmer(Integer.parseInt("113"), "D", "Java+", "GREEN"));
+        jogo.programmers.get(3).ferramentas.put(0,new AbyssOrTool(1,1,10));
+        jogo.programmers.get(3).ferramentas.put(1,new AbyssOrTool(1,2,11));
+        System.out.println(jogo.programmers.get(3));
     }
 
     @Test

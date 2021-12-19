@@ -82,6 +82,11 @@ public class Programmer {
         if (this.ferramentas.size() == 0){
             return this.id + " | " + this.name + " | " + this.pos + " | No tools | " + this.linguagemFavorita + " | " + this.estado;
         }
-        return this.id + " | " + this.name + " | " + this.pos + " | " + this.ferramentas + " | " + this.linguagemFavorita + " | " + this.estado;
+        String muitasFerramentas = "";
+        System.out.println("DB: "+ferramentas.values().size());
+        for(AbyssOrTool at: this.ferramentas.values()){
+            muitasFerramentas+= at.getNome()+" | ";
+        }
+        return this.id + " | " + this.name + " | " + this.pos + " | " + muitasFerramentas  + this.linguagemFavorita + " | " + this.estado;
     }
 }
