@@ -33,26 +33,21 @@ public class GameManager {
     }  //FEITO
 
     public boolean createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools){
-       /* abismoFerramentas.clear();
+        abismoFerramentas.clear();
         tools.put(0, new ArrayList<>());
         tools.put(1, new ArrayList<>());
         tools.put(2, new ArrayList<>());
         tools.put(3, new ArrayList<>());
         tools.put(4, new ArrayList<>());
         tools.put(5, new ArrayList<>());
-        */
         if(abyssesAndTools != null){
             int x = 0;
             for (String[] aux : abyssesAndTools) {
-                //validar se tem 3 argumentos em cada linha
-                if (aux.length<3){
-                    return false;
-                }
                 //validar sub type id lido
-                if (Integer.parseInt(aux[0]) == 0 && Integer.parseInt(aux[1])<0 && Integer.parseInt(aux[1])>9  ){
+                if (Integer.parseInt(aux[0]) == 0 && (Integer.parseInt(aux[1])<0 || Integer.parseInt(aux[1])>9)){
                     return false;
                 }
-                if (Integer.parseInt(aux[0]) == 1 && Integer.parseInt(aux[1])<0 && Integer.parseInt(aux[1])>5  ){
+                if (Integer.parseInt(aux[0]) == 1 && (Integer.parseInt(aux[1])<0 || Integer.parseInt(aux[1])>5)){
                     return false;
                 }
                 if (Integer.parseInt(aux[0]) > 1 || Integer.parseInt(aux[0]) < 0 || Integer.parseInt(aux[2]) > worldSize) {
