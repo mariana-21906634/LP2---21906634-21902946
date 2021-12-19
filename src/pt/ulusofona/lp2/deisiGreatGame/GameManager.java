@@ -15,11 +15,16 @@ public class GameManager {
 
 
     public GameManager(){
-
+        programmers.clear();
+        jogada.clear();
+        posID.clear();
+        nrTurnos = 1;
+        tamanhoTab = 0;
+        dados = 0;
     }
 
     public boolean createInitialBoard(String[][] playerInfo, int boardSize){
-        reset();
+        //reset();
         if(playerInfo.length < 2 || playerInfo.length > 4 || boardSize < playerInfo.length*2){
             return false;
         }
@@ -33,13 +38,14 @@ public class GameManager {
     }  //FEITO
 
     public boolean createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools){
-        abismoFerramentas.clear();
+       /* abismoFerramentas.clear();
         tools.put(0, new ArrayList<>());
         tools.put(1, new ArrayList<>());
         tools.put(2, new ArrayList<>());
         tools.put(3, new ArrayList<>());
         tools.put(4, new ArrayList<>());
         tools.put(5, new ArrayList<>());
+        */
         if(abyssesAndTools != null){
             int x = 0;
             for (String[] aux : abyssesAndTools) {
