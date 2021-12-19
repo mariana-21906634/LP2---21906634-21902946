@@ -15,12 +15,7 @@ public class GameManager {
 
 
     public GameManager(){
-        programmers.clear();
-        jogada.clear();
-        posID.clear();
-        nrTurnos = 1;
-        //tamanhoTab = 0;
-        dados = 0;
+
     }
 
     public boolean createInitialBoard(String[][] playerInfo, int boardSize){
@@ -49,6 +44,17 @@ public class GameManager {
         if(abyssesAndTools != null){
             int x = 0;
             for (String[] aux : abyssesAndTools) {
+                //validar se tem 3 argumentos em cada linha
+                if (aux.length<3){
+                    return false;
+                }
+                //validar sub type id lido
+                if (Integer.parseInt(aux[0]) == 0 && Integer.parseInt(aux[1])<0 && Integer.parseInt(aux[1])>9  ){
+                    return false;
+                }
+                if (Integer.parseInt(aux[0]) == 1 && Integer.parseInt(aux[1])<0 && Integer.parseInt(aux[1])>5  ){
+                    return false;
+                }
                 if (Integer.parseInt(aux[0]) > 1 || Integer.parseInt(aux[0]) < 0 || Integer.parseInt(aux[2]) > worldSize) {
                     return false;
                 }
