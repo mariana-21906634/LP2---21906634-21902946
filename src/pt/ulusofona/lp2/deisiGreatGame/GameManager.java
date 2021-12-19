@@ -124,7 +124,7 @@ public class GameManager {
     public String getProgrammersInfo(){
         StringBuilder informacao = new StringBuilder();
         for(Map.Entry<Integer, Programmer> programmer : programmers.entrySet()){
-            if(informacao.length() != 0){
+            if(informacao.length() == 0){
                 informacao.append(programmer.getValue().getName()).append(" : ");
             }else{
                 informacao.append(" | ").append(programmer.getValue().getName()).append(" : ");
@@ -133,7 +133,7 @@ public class GameManager {
                 informacao.append("No tools");
             }else{
                 for(Map.Entry<Integer, AbyssOrTool> ferramentas : programmer.getValue().getFerramentas().entrySet()){
-                    informacao.append(ferramentas).append(";");
+                    informacao.append(ferramentas.getValue().getNome()).append(";");
                 }
                 informacao.deleteCharAt(informacao.length()-1);
             }
