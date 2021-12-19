@@ -157,7 +157,7 @@ public class GameManager {
                         switch (a.getValue().getIdTipo()) {
                             case 0 -> {
                                 if (!tools.get(4).contains(jogada.get(0)) && !tools.get(5).contains(jogada.get(0))) {
-                                    programmers.get(jogada.get(0)).setPos(posAtual - 1);
+                                    programmers.get(jogada.get(0)).setPos(posAtual - 2);
                                     explicacao = "O programador recua 1 casa.";
                                 } else {
                                     if (tools.get(4).contains(jogada.get(0))) {
