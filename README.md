@@ -1,1 +1,1 @@
-![](Diagrama Parte II.png?raw=true "Diagrama UML")
+![](Diagrama_Parte_II.png?raw=true "Diagrama UML")
