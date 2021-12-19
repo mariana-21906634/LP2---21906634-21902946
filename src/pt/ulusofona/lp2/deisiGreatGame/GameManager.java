@@ -124,7 +124,18 @@ public class GameManager {
     }  //FEITO
 
     public boolean moveCurrentPlayer(int nrSpaces){
-
+        int momentoAtual = programmers.get(jogada.get(0)).getPos();
+        int aux;
+        if(nrSpaces < 1 || nrSpaces > 6){
+            return false;
+        }
+        if(tamanhoTab < momentoAtual + nrSpaces){
+            aux = tamanhoTab-momentoAtual-nrSpaces;
+            programmers.get(jogada.get(0)).setPos(tamanhoTab-Math.abs(aux));
+        }else{
+            programmers.get(jogada.get(0)).setPos(momentoAtual+nrSpaces);
+        }
+        posID.put(jogada.get(0), programmers.get(jogada.get(0)).getPos());
         return true;
     }
 
