@@ -19,12 +19,12 @@ public class GameManager {
         jogada.clear();
         posID.clear();
         nrTurnos = 1;
-        tamanhoTab = 0;
+        //tamanhoTab = 0;
         dados = 0;
     }
 
     public boolean createInitialBoard(String[][] playerInfo, int boardSize){
-        //reset();
+        reset();
         if(playerInfo.length < 2 || playerInfo.length > 4 || boardSize < playerInfo.length*2){
             return false;
         }
@@ -349,7 +349,7 @@ public class GameManager {
         jogada.clear();
         posID.clear();
         nrTurnos = 1;
-        tamanhoTab = 0;
+        //tamanhoTab = 0;
         dados = 0;
     }  //FEITO
 }
