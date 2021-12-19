@@ -79,6 +79,6 @@ public class Programmer {
 
     @Override
     public String toString() {
-        return this.id + " | " + this.name + " | " + this.pos + " | " + this.linguagemFavorita + " | " + this.estado;
+        return this.id + " | " + this.name + " | " + this.ferramentas + " | " + this.pos + " | " + this.linguagemFavorita + " | " + this.estado;
     }
 }
