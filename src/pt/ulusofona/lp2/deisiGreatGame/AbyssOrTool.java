@@ -14,7 +14,7 @@ public class AbyssOrTool {
     }
 
     public int getPosicao() {
-        return posicao;
+        return this.posicao;
     }
 
     public int getIdTipo() {

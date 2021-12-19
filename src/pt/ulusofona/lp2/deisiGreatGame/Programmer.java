@@ -41,8 +41,8 @@ public class Programmer {
         return ferramentas;
     }
 
-    public void setFerramentas(HashMap<Integer, AbyssOrTool> ferramentas) {
-        this.ferramentas = ferramentas;
+    public void setFerramentas(AbyssOrTool ferramentas) {
+        this.ferramentas.put(ferramentas.getIdTipo(),ferramentas);
     }
 
     public void removeFerramenta(Integer id){
