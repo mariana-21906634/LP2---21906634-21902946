@@ -172,7 +172,7 @@ public class GameManager {
 
                         switch (a.getValue().getIdTipo()) {
                             case 0 -> {
-                                if (!tools.get(4).contains(jogada.get(0)) && !tools.get(5).contains(jogada.get(0))) {   // ISTO TA MAL
+                                if (!tools.get(4).contains(jogada.get(0)) && !tools.get(5).contains(jogada.get(0))) {
                                     programmers.get(jogada.get(0)).setPos(posAtual - 1);
                                     explicacao = "O programador recua 1 casa.";
                                 } else {
@@ -187,12 +187,11 @@ public class GameManager {
                                 }
                             } // erro de sintaxe - feito
                             case 1 -> {
-                                if (!tools.get(2).contains(jogada.get(0)) && !tools.get(5).contains(jogada.get(0))) {
+                                if (!tools.get(2).contains(tools.get(0)) || !tools.get(5).contains(jogada.get(0))) {
                                     programmers.get(jogada.get(0)).setPos(posAtual - (dados / 2));
                                     int dado = dados/2;
-                                    explicacao = "O programador recua " + dado + " casas.";
+                                    explicacao = "Recua " + dado + " casa(s)";
                                 } else {
-                                    explicacao = "O abismo não tem efeito sobre ti.";
                                     if (tools.get(2).contains(jogada.get(0))) {
                                         tools.get(2).remove(jogada.get(0));
                                         programmers.get(jogada.get(0)).removeFerramenta(2);
@@ -201,7 +200,7 @@ public class GameManager {
                                         programmers.get(jogada.get(0)).removeFerramenta(5);
                                     }
                                 }
-                            } // erro de logica - feito
+                            }  // erro de logica - feito
                             case 2 -> {
                                 if (!tools.get(3).contains(jogada.get(0)) && !tools.get(5).contains(jogada.get(0))) {
                                     programmers.get(jogada.get(0)).setPos(posAtual - 2);
