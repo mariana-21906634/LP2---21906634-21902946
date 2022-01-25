@@ -97,6 +97,8 @@ public class GameManager {
         return "blank.png";
     }  //FEITO
 
+    
+
     public String getTitle(int position){
         for (Map.Entry<Integer, AbyssOrTool> abismoFerramenta : abismoFerramentas.entrySet()) {
             if (abismoFerramenta.getValue().getPosicao() == position) {
@@ -177,8 +179,6 @@ public class GameManager {
             for (Map.Entry<Integer, AbyssOrTool> a : abismoFerramentas.entrySet()) {
                 if (a.getValue().getPosicao() == posAtual) {
                     if (a.getValue().getId() == 0) {
-
-
                         switch (a.getValue().getIdTipo()) {
                             case 0 -> {
                                 if (!tools.get(4).contains(jogada.get(0)) && !tools.get(5).contains(jogada.get(0))) {
@@ -197,8 +197,8 @@ public class GameManager {
                             } // erro de sintaxe - feito
                             case 1 -> {
                                 if (!tools.get(2).contains(tools.get(0)) || !tools.get(5).contains(jogada.get(0))) {
-                                    programmers.get(jogada.get(0)).setPos(posAtual - (dados / 2));
-                                    int dado = dados/2;
+                                    double dado = (double)dados/2;
+                                    programmers.get(jogada.get(0)).setPos(posAtual - (int)Math.floor(dado));
                                     explicacao = "Recua " + dado + " casa(s)";
                                 } else {
                                     if (tools.get(2).contains(jogada.get(0))) {
