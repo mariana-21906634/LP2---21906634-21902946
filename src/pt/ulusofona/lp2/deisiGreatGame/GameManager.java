@@ -62,6 +62,14 @@ public class GameManager {
         createInitialBoard(playerInfo, worldSize);
     }  //FEITO
 
+    public void loadGame(){
+
+    }
+
+    public void saveGame(){
+
+    }
+
     public String getImagePng(int position){
         if(position==tamanhoTab){
             return "glory.png";
@@ -378,4 +386,6 @@ public class GameManager {
         posID.clear();
         nrTurnos = 1;
     }  //FEITO
+
+
 }
