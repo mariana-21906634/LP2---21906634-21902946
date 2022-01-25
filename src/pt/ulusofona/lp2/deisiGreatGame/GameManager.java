@@ -1,6 +1,7 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
 import javax.swing.*;
+import java.io.File;
 import java.util.*;
 
 public class GameManager {
@@ -62,12 +63,12 @@ public class GameManager {
         createInitialBoard(playerInfo, worldSize);
     }  //FEITO
 
-    public void loadGame(){
-
+    public boolean loadGame(File fich) {
+        return true;
     }
 
-    public void saveGame(){
-
+    public boolean saveGame(File fich) {
+        return true;
     }
 
     public String getImagePng(int position){
