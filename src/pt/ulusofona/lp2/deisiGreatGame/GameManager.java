@@ -18,10 +18,10 @@ public class GameManager {
 
     }
 
-    public boolean createInitialBoard(String[][] playerInfo, int boardSize){
+    public void createInitialBoard(String[][] playerInfo, int boardSize) throws InvalidInitialBoardException{
         reset();
         if(playerInfo.length < 2 || playerInfo.length > 4 || boardSize < playerInfo.length*2){
-            return false;
+            throw new InvalidInitialBoardException();
         }
         tamanhoTab = boardSize;
         for (String[] player : playerInfo) {
@@ -29,11 +29,12 @@ public class GameManager {
             jogada.add(Integer.parseInt(player[0]));
         }
         Collections.sort(jogada);
-        return true;
     }  //FEITO
 
-    public boolean createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools){
+    public void createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools) throws InvalidInitialBoardException{
+
         abismoFerramentas.clear();
+        tools.clear();
         tools.put(0, new ArrayList<>());
         tools.put(1, new ArrayList<>());
         tools.put(2, new ArrayList<>());
@@ -45,13 +46,13 @@ public class GameManager {
             for (String[] aux : abyssesAndTools) {
                 //validar sub type id lido
                 if (Integer.parseInt(aux[0]) == 0 && (Integer.parseInt(aux[1])<0 || Integer.parseInt(aux[1])>9)){
-                    return false;
+                    throw new InvalidInitialBoardException();
                 }
                 if (Integer.parseInt(aux[0]) == 1 && (Integer.parseInt(aux[1])<0 || Integer.parseInt(aux[1])>5)){
-                    return false;
+                    throw new InvalidInitialBoardException();
                 }
                 if (Integer.parseInt(aux[0]) > 1 || Integer.parseInt(aux[0]) < 0 || Integer.parseInt(aux[2]) > worldSize) {
-                    return false;
+                    throw new InvalidInitialBoardException();
                 }
                 AbyssOrTool objeto = new AbyssOrTool(Integer.parseInt(aux[0]), Integer.parseInt(aux[1]), Integer.parseInt(aux[2]));
                 abismoFerramentas.put(x, objeto);
@@ -59,7 +60,6 @@ public class GameManager {
             }
         }
         createInitialBoard(playerInfo, worldSize);
-        return true;
     }  //FEITO
 
     public String getImagePng(int position){
