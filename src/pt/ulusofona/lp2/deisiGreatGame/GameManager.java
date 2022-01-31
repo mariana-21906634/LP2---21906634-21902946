@@ -1,7 +1,11 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
+import javax.naming.InterruptedNamingException;
 import javax.swing.*;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 public class GameManager {
@@ -21,8 +25,11 @@ public class GameManager {
 
     public void createInitialBoard(String[][] playerInfo, int boardSize) throws InvalidInitialBoardException{
         reset();
-        if(playerInfo.length < 2 || playerInfo.length > 4 || boardSize < playerInfo.length*2){
-            throw new InvalidInitialBoardException();
+        if(playerInfo.length < 2 || playerInfo.length > 4){
+            throw new InvalidInitialBoardException("O número de jogadores é inválido");
+        }
+        if (boardSize < playerInfo.length*2){
+            throw new InvalidInitialBoardException("O tamanho do tabuleiro é inválido");
         }
         tamanhoTab = boardSize;
         for (String[] player : playerInfo) {
@@ -44,16 +51,16 @@ public class GameManager {
         tools.put(5, new ArrayList<>());
         if(abyssesAndTools != null){
             int x = 0;
-            for (String[] aux : abyssesAndTools) {
+            for (String[] aux : abyssesAndTools) {  // aux = abismo ou ferramenta
                 //validar sub type id lido
                 if (Integer.parseInt(aux[0]) == 0 && (Integer.parseInt(aux[1])<0 || Integer.parseInt(aux[1])>9)){
-                    throw new InvalidInitialBoardException();
+                    throw new InvalidInitialBoardException("O abismo é inválido", aux[1], true, false );
                 }
                 if (Integer.parseInt(aux[0]) == 1 && (Integer.parseInt(aux[1])<0 || Integer.parseInt(aux[1])>5)){
-                    throw new InvalidInitialBoardException();
+                    throw new InvalidInitialBoardException("A ferramenta é inválida", aux[1], false, true);
                 }
                 if (Integer.parseInt(aux[0]) > 1 || Integer.parseInt(aux[0]) < 0 || Integer.parseInt(aux[2]) > worldSize) {
-                    throw new InvalidInitialBoardException();
+                    throw new InvalidInitialBoardException("O abismo ou uma ferramenta está inválida", aux[1], false, false);
                 }
                 AbyssOrTool objeto = new AbyssOrTool(Integer.parseInt(aux[0]), Integer.parseInt(aux[1]), Integer.parseInt(aux[2]));
                 abismoFerramentas.put(x, objeto);
@@ -63,13 +70,140 @@ public class GameManager {
         createInitialBoard(playerInfo, worldSize);
     }  //FEITO
 
-    public boolean loadGame(File fich) {
+    public boolean loadGame(File file) {
+        if(file == null){
+            return false;
+        }
+        reset();
+        abismoFerramentas.clear();
+        tools.clear();
+        tools.put(0, new ArrayList<>());
+        tools.put(1, new ArrayList<>());
+        tools.put(2, new ArrayList<>());
+        tools.put(3, new ArrayList<>());
+        tools.put(4, new ArrayList<>());
+        tools.put(5, new ArrayList<>());
+        try {
+            Scanner ler = new Scanner(file);
+            String linha = "";
+            String[] divideLinha;
+            int count = 0;
+            while (ler.hasNextLine()){
+                linha = ler.nextLine();
+                divideLinha = linha.split(" : ");
+                if (divideLinha[0].contains("f")){
+                    for (int i = 1; i < divideLinha.length; i++){
+                        tools.get(Integer.parseInt(divideLinha[0].substring(0,
+                                divideLinha[0].length()-1))).add(Integer.parseInt(divideLinha[i]));
+                    }
+                }else{
+                    switch (divideLinha.length){
+                        case 1 -> {
+                          switch (count){
+                              case 0 -> {
+                                  tamanhoTab = Integer.parseInt(divideLinha[0]);
+                                  count++;
+                              }
+                              case 1 -> {
+                                  nrTurnos = Integer.parseInt(divideLinha[0]);
+                                  count++;
+                              }
+                              case 2 -> {
+                                  dados = Integer.parseInt(divideLinha[0]);
+                                  count++;
+                              }
+                              case 3 -> jogada.add(Integer.parseInt(divideLinha[0]));
+                          }
+                        }
+                        case 2 -> posID.put(Integer.parseInt(divideLinha[0]), Integer.parseInt(divideLinha[1]));
+                        case 3 -> abismoFerramentas.put(abismoFerramentas.size(),
+                                new AbyssOrTool(Integer.parseInt(divideLinha[0]), Integer.parseInt(divideLinha[1]),
+                                        Integer.parseInt(divideLinha[2])));
+                        case 7 -> {
+                            Programmer progamador = new Programmer(Integer.parseInt(divideLinha[0]),
+                                    divideLinha[1], divideLinha[2], divideLinha[3]);
+                            progamador.setPos(Integer.parseInt(divideLinha[4]));
+                            progamador.setEstado(divideLinha[5]);
+                            if (!divideLinha[6].contains("Nenhuma Ferramenta")){
+                                String[] ferramenta = divideLinha[6].split(" - ");
+                                if (ferramenta.length > 3){
+                                    for (int i = 5; i < ferramenta.length; i+= 3){
+                                        progamador.setFerramentas(new AbyssOrTool(Integer.parseInt(ferramenta[i-2])
+                                                , Integer.parseInt(ferramenta[i-1]),
+                                                Integer.parseInt(ferramenta[i])));
+                                    }
+                                }else{
+                                    progamador.setFerramentas(new AbyssOrTool(Integer.parseInt(ferramenta[0])
+                                    , Integer.parseInt(ferramenta[1]), Integer.parseInt(ferramenta[2])));
+                                }
+                            }
+                            programmers.put(Integer.parseInt(divideLinha[0]), progamador);
+                        }
+                    }
+                }
+            }
+            ler.close();
+        }catch (FileNotFoundException e){
+            return false;
+        }
         return true;
     }
 
-    public boolean saveGame(File fich) {
+    public boolean saveGame(File file) {
+        try{
+            if(file != null && file.createNewFile()){
+                FileWriter save = new FileWriter(file.getName());
+                save.write(tamanhoTab + "\n" + nrTurnos + "\n" + dados + "\n");
+                for(Map.Entry<Integer, AbyssOrTool> abs : abismoFerramentas.entrySet()){
+                    if(abs != null){
+                        save.write(abs.getValue().id + " : " + abs.getValue().idTipo + " : " + abs.getValue().posicao + "\n");
+                    }
+                }
+                for(Map.Entry<Integer, Programmer> prog : programmers.entrySet()){
+                    if(prog != null){
+                        if(prog.getValue().getFerramentas().isEmpty()){
+                            save.write(prog.getValue().getId() + " : " + prog.getValue().getName() + " : " +
+                                    prog.getValue().getLinguagemFavorita() + " : " + prog.getValue().getColor() + " : "
+                            + prog.getValue().getPos() + " : " + prog.getValue().getEstado() + " : Nenhuma Ferramenta"
+                                    + "\n");
+                        }else{
+                            StringBuilder ferramentas = new StringBuilder();
+                            prog.getValue().getFerramentas().values().forEach(v -> ferramentas.append(v.getId()).         //vai criar um string com as ferramentas todas
+                                    append(" - ").append(v.getIdTipo()).append(" - ").append(v.getPosicao()).append(" - "));
+                            save.write(prog.getValue().getId() + " : " + prog.getValue().getName() + " : " +
+                                    prog.getValue().getLinguagemFavorita() + " : " + prog.getValue().getColor() + " : "
+                                    + prog.getValue().getPos() + " : " + prog.getValue().getEstado() + " : " +
+                                    ferramentas.substring(0, ferramentas.length()-3) + "\n");
+                        }
+                    }
+                }
+                for(Map.Entry<Integer, ArrayList<Integer>> tool : tools.entrySet()){
+                    if(tool != null){
+                        StringBuilder ferramentas = new StringBuilder();
+                        ferramentas.append(tool.getKey()).append("f");
+                        for(int f : tool.getValue()){
+                            ferramentas.append(" : ").append(f);
+                        }
+                        save.write(ferramentas + "\n");
+                    }
+                }
+                for(Map.Entry<Integer, Integer> id : posID.entrySet()){
+                    if(id != null){
+                        save.write(id.getKey() + " : " + id.getValue() + "\n");
+                    }
+                }
+                for(Integer jogada : jogada){
+                    save.write(jogada + "\n");
+                }
+               save.close();
+            }else{
+                return false;
+            }
+        }catch (IOException e){
+            return false;
+        }
         return true;
-    }
+    }  //FEITO
 
     public String getImagePng(int position){
         if(position==tamanhoTab){
@@ -96,8 +230,6 @@ public class GameManager {
         }
         return "blank.png";
     }  //FEITO
-
-    
 
     public String getTitle(int position){
         for (Map.Entry<Integer, AbyssOrTool> abismoFerramenta : abismoFerramentas.entrySet()) {

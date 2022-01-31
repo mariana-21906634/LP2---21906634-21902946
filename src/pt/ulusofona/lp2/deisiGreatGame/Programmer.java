@@ -45,6 +45,10 @@ public class Programmer {
         this.ferramentas.put(ferramentas.getIdTipo(),ferramentas);
     }
 
+    public String getLinguagemFavorita() {
+        return linguagemFavorita;
+    }
+
     public void removeFerramenta(Integer id){
         this.ferramentas.remove(id);
     }

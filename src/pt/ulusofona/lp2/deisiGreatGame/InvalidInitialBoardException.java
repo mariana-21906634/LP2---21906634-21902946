@@ -1,13 +1,22 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
 public class InvalidInitialBoardException extends Exception{
-    String message;
-    int abismoFerramenta;
+    String message, ID;
+    boolean abismo, ferramenta;
 
-   public InvalidInitialBoardException(){}
 
-   public InvalidInitialBoardException(String message){
-        this.message = message;
+   InvalidInitialBoardException(String message, String ID, boolean abismo, boolean ferramenta){
+       this.message = message;
+       this.ID = ID;
+       this.abismo = abismo;
+       this.ferramenta = ferramenta;
+   }
+
+   InvalidInitialBoardException(String message){
+       this.message = message;
+       this.ID = "-1";
+       this.abismo = false;
+       this.ferramenta = false;
     }
 
     public String getMessage(){
@@ -15,14 +24,14 @@ public class InvalidInitialBoardException extends Exception{
     }
 
     public boolean isInvalidAbyss(){
-        return false;
+        return abismo;
     }
 
     public boolean isInvalidTool(){
-        return false;
+        return ferramenta;
     }
 
     public String getTypeId(){
-        return Integer.toString(abismoFerramenta);
+        return ID;
     }
 }
