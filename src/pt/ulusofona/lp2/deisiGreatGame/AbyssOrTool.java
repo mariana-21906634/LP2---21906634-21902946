@@ -33,7 +33,8 @@ public class AbyssOrTool {
                 case 6 -> "Efeitos secundários";
                 case 7 -> "Blue Screen of Death";
                 case 8 -> "Ciclo infinito";
-                default -> "Segmentation Fault";
+                case 9 -> "Segmentation Fault";
+                default -> "Vamos Fazer Contas";
             };
         } else {
             return switch (this.idTipo) {
@@ -64,6 +65,7 @@ public class AbyssOrTool {
                 case 7 -> "bsod.png";
                 case 8 -> "infinite-loop.png";
                 case 9 -> "core-dumped.png";
+                case 10 -> "math.png";
                 default -> null;
             };
         }

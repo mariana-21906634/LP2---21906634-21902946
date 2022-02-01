@@ -1,5 +1,6 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -8,6 +9,7 @@ public class Programmer {
     int id, pos;
     String name, linguagemFavorita, estado, color;
     HashMap<Integer,AbyssOrTool> ferramentas = new HashMap<>();
+    ArrayList<Integer> posicoes = new ArrayList<>();
 
     public Programmer(){}
 
@@ -77,6 +79,14 @@ public class Programmer {
             case "GREEN" -> ProgrammerColor.GREEN;
             default -> null;
         };
+    }
+
+    public ArrayList getPosicoes(){
+        return posicoes;
+    }
+
+    public void setPosicoes(int pos){
+        posicoes.add(pos);
     }
 
 

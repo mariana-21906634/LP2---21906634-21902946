@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class GameManager {
@@ -53,7 +54,7 @@ public class GameManager {
             int x = 0;
             for (String[] aux : abyssesAndTools) {  // aux = abismo ou ferramenta
                 //validar sub type id lido
-                if (Integer.parseInt(aux[0]) == 0 && (Integer.parseInt(aux[1])<0 || Integer.parseInt(aux[1])>9)){
+                if (Integer.parseInt(aux[0]) == 0 && (Integer.parseInt(aux[1])<0 || Integer.parseInt(aux[1])>10)){
                     throw new InvalidInitialBoardException("O abismo é inválido", aux[1], true, false );
                 }
                 if (Integer.parseInt(aux[0]) == 1 && (Integer.parseInt(aux[1])<0 || Integer.parseInt(aux[1])>5)){
@@ -443,6 +444,11 @@ public class GameManager {
                                 explicacao = "Se outro jogador cair nesta casa, recuam os dois 3 casas.";
                             }
                         } // Segmentation fault - feito
+
+                        case 10 ->{
+                            int media = 0;
+                            for (programmers.)
+                        }
                     }
 
 
