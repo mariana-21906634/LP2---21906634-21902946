@@ -1,20 +1,20 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
 public class InvalidInitialBoardException extends Exception{
-    String message, ID;
+    String message, iD;
     boolean abismo, ferramenta;
 
 
    InvalidInitialBoardException(String message, String ID, boolean abismo, boolean ferramenta){
        this.message = message;
-       this.ID = ID;
+       this.iD = ID;
        this.abismo = abismo;
        this.ferramenta = ferramenta;
    }
 
    InvalidInitialBoardException(String message){
        this.message = message;
-       this.ID = "-1";
+       this.iD = "-1";
        this.abismo = false;
        this.ferramenta = false;
     }
@@ -32,6 +32,6 @@ public class InvalidInitialBoardException extends Exception{
     }
 
     public String getTypeId(){
-        return ID;
+        return iD;
     }
 }
