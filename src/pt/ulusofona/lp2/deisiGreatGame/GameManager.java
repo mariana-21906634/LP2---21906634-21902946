@@ -447,7 +447,7 @@ public class GameManager {
 
                         case 10 ->{
                             int media = 0;
-                            for (programmers.)
+
                         }
                     }
 
