@@ -305,158 +305,163 @@ public class GameManager {
     }
 
     public String reactToAbyssOrTool() {
-        int posAtual = programmers.get(jogada.get(0)).getPos();
+        int posicaoAtual = programmers.get(jogada.get(0)).getPos();
+        int keyAbismoFerramenta = 0;
         String explicacao = null;
-        if (getTitle(posAtual) != null) {
-            for (Map.Entry<Integer, AbyssOrTool> a : abismoFerramentas.entrySet()) {
-                if (a.getValue().getPosicao() == posAtual) {
-                    if (a.getValue().getId() == 0) {
-                        switch (a.getValue().getIdTipo()) {
-                            case 0 -> {
-                                if (!tools.get(4).contains(jogada.get(0)) && !tools.get(5).contains(jogada.get(0))) {
-                                    programmers.get(jogada.get(0)).setPos(posAtual - 1);
-                                    explicacao = "O programador recua 1 casa.";
-                                } else {
-                                    explicacao = "O abismo não tem efeito sobre ti.";
-                                    if (tools.get(4).contains(jogada.get(0))) {
-                                        tools.get(4).remove(jogada.get(0));
-                                        programmers.get(jogada.get(0)).removeFerramenta(4);
-                                    } else {
-                                        tools.get(5).remove(jogada.get(0));
-                                        programmers.get(jogada.get(0)).removeFerramenta(5);
-                                    }
-                                }
-                            } // erro de sintaxe - feito
-                            case 1 -> {
-                                if (!tools.get(2).contains(tools.get(0)) || !tools.get(5).contains(jogada.get(0))) {
-                                    double dado = (double)dados/2;
-                                    programmers.get(jogada.get(0)).setPos(posAtual - (int)Math.floor(dado));
-                                    explicacao = "Recua " + dado + " casa(s)";
-                                } else {
-                                    if (tools.get(2).contains(jogada.get(0))) {
-                                        tools.get(2).remove(jogada.get(0));
-                                        programmers.get(jogada.get(0)).removeFerramenta(2);
-                                    } else {
-                                        tools.get(5).remove(jogada.get(0));
-                                        programmers.get(jogada.get(0)).removeFerramenta(5);
-                                    }
-                                }
-                            }  // erro de logica - feito
-                            case 2 -> {
-                                if (!tools.get(3).contains(jogada.get(0)) && !tools.get(5).contains(jogada.get(0))) {
-                                    programmers.get(jogada.get(0)).setPos(posAtual - 2);
-                                    explicacao = "O programador recua 2 casas.";
-                                } else {
-                                    explicacao = "O abismo não tem efeito sobre ti.";
-                                    if (tools.get(3).contains(jogada.get(0))) {
-                                        tools.get(3).remove(jogada.get(0));
-                                        programmers.get(jogada.get(0)).removeFerramenta(3);
-                                    } else {
-                                        tools.get(5).remove(jogada.get(0));
-                                        programmers.get(jogada.get(0)).removeFerramenta(5);
-                                    }
-                                }
-                            } // exception - feito
-                            case 3 -> {
-                                if (!tools.get(3).contains(jogada.get(0)) && !tools.get(5).contains(jogada.get(0))) {
-                                    programmers.get(jogada.get(0)).setPos(posAtual - 3);
-                                    explicacao = "O programador recua 3 casas.";
-                                } else {
-                                    explicacao = "O abismo não tem efeito sobre ti.";
-                                    if (tools.get(3).contains(jogada.get(0))) {
-                                        tools.get(3).remove(jogada.get(0));
-                                        programmers.get(jogada.get(0)).removeFerramenta(3);
-                                    } else {
-                                        tools.get(5).remove(jogada.get(0));
-                                        programmers.get(jogada.get(0)).removeFerramenta(5);
-                                    }
-                                }
-                            } // file not found exception - feito
-                            case 4 -> {
-                                programmers.get(jogada.get(0)).setPos(1);
-                                explicacao = "O programador volta à primeira casa do jogo.";
-                            } // Crash (aka Rebentanço) - feito
-                            case 5 -> {
-                                if (!tools.get(0).contains(jogada.get(0))) {
-                                    programmers.get(jogada.get(0)).setPos(posAtual - dados);
-                                    explicacao = "O programador recua até à casa onde estava antes de chegar a esta casa.";
-                                } else {
-                                    explicacao = "O abismo não tem efeito sobre ti.";
-                                    tools.get(0).remove(jogada.get(0));
-                                    programmers.get(jogada.get(0)).removeFerramenta(0);
-                                }
-                            } // duplicated code abismo - feito
+        if (getTitle(posicaoAtual) != null) {
 
-                            case 6 -> {
-                                if (!tools.get(1).contains(jogada.get(0))) {
-                                    programmers.get(jogada.get(0)).setPos(posAtual); // jogada default
-                                    explicacao = "O programador recua para a posição onde estava há 2 movimentos atrás.";
-                                } else {
-                                    explicacao = "O abismo não tem efeito sobre ti.";
-                                    tools.get(1).remove(jogada.get(0));
-                                    programmers.get(jogada.get(0)).removeFerramenta(1);
-                                }
-                            } // efeitos secundarios abismo - por fazer
-
-                            case 7 -> {
-                                programmers.get(jogada.get(0)).setEstado("Derrotado");
-                                posID.put(jogada.get(0), programmers.get(jogada.get(0)).getPos());
-                                explicacao = "O programador perde imediatamente o jogo.";
-                                jogada.remove(0);
-                                nrTurnos++;
-                                return explicacao;
-                            } // BSOD - feito
-
-                            case 8 -> {
-                                if (!tools.get(1).contains(jogada.get(0))) {
-                                    programmers.get(jogada.get(0)).setPos(posAtual); // jogada default
-                                    explicacao = "O programador fica preso na casa onde está até que lá apareça outro programador para o ajuda";
-                                } else {
-                                    explicacao = "O abismo não tem efeito sobre ti.";
-                                    tools.get(1).remove(jogada.get(0));
-                                    programmers.get(jogada.get(0)).removeFerramenta(1);
-                                }
-                            } // ciclo infinito abismo - por fazer
-
-                            case 9 -> {
-                                int i = 0;
-                                ArrayList<Integer> iDs = new ArrayList<>();
-                                for (Map.Entry<Integer, Programmer> j : programmers.entrySet()) {
-                                    if (a.getValue().getPosicao() == j.getValue().getPos()) {
-                                        iDs.add(j.getValue().getId());
-                                        i++;
-                                    }
-                                }
-                                if (i >= 2) {
-                                    for (int id : iDs) {
-                                        programmers.get(id).setPos(posAtual - 3);
-                                    }
-                                    explicacao = "Todos os jogadores nessa casa recuam 3 casas";
-                                }else{
-                                    explicacao = "Se outro jogador cair nesta casa, recuam os dois 3 casas.";
-                                }
-                            } // Segmentation fault - feito
-                        }
-
-
-                    } else {
-                        if (!tools.get(a.getValue().getIdTipo()).contains(jogada.get(0))) {
-                            programmers.get(jogada.get(0)).setFerramentas(a.getValue());
-                            tools.get(a.getValue().getIdTipo()).add(jogada.get(0));
-                            switch (a.getValue().getIdTipo()) {
-                                case 0 -> explicacao = "Herança - evita os efeitos do abismo (Duplicated code)";
-                                case 1 -> explicacao = "Programação funcional - evita os efeitos dos abismos (Efeitos secundários e Ciclo infinito)";
-                                case 2 -> explicacao = "Testes unitários - evita os efeitos do abismo (Erro de lógica)";
-                                case 3 -> explicacao = "Tratamento de excepções - evita os efeitos dos abismos (Exception e File not found exception)";
-                                case 4 -> explicacao = "IDE - evita os efeitos do abismo (Erro de sintaxe)";
-                                case 5 -> explicacao = "Ajuda do professor - tem o mesmo efeito que as seguintes ferramentas (Testes unitários, IDE e Tratamento de excepções)";
-                            }
-                        } else {
-                            explicacao = "Já existe uma ferramenta igual a esta";
-                        }
-                    }
+            for (Map.Entry<Integer, AbyssOrTool> abismoFerramenta : abismoFerramentas.entrySet()) {                    //guardar a key do abismo ou ferramenta onde o player ta
+                if (abismoFerramenta.getValue().getPosicao() == programmers.get(jogada.get(0)).getPos()) {
+                    keyAbismoFerramenta = abismoFerramenta.getKey();
                 }
             }
+
+
+                if (abismoFerramentas.get(keyAbismoFerramenta).getId() == 0) {
+                    switch (abismoFerramentas.get(keyAbismoFerramenta).getIdTipo()) {
+                        case 0 -> {
+                            if (!tools.get(4).contains(jogada.get(0)) && !tools.get(5).contains(jogada.get(0))) {
+                                programmers.get(jogada.get(0)).setPos(posicaoAtual - 1);
+                                explicacao = "O programador recua 1 casa.";
+                            } else {
+                                explicacao = "O abismo não tem efeito sobre ti.";
+                                if (tools.get(4).contains(jogada.get(0))) {
+                                    tools.get(4).remove(jogada.get(0));
+                                    programmers.get(jogada.get(0)).removeFerramenta(4);
+                                } else {
+                                    tools.get(5).remove(jogada.get(0));
+                                    programmers.get(jogada.get(0)).removeFerramenta(5);
+                                }
+                            }
+                        } // erro de sintaxe - feito
+                        case 1 -> {
+                            if (!tools.get(2).contains(jogada.get(0)) || !tools.get(5).contains(jogada.get(0))) {
+                                double dado = (double) dados / 2;
+                                programmers.get(jogada.get(0)).setPos(posicaoAtual - (int) Math.floor(dado));
+                                explicacao = "Recua " + dado + " casa(s)";
+                            } else {
+                                if (tools.get(2).contains(jogada.get(0))) {
+                                    tools.get(2).remove(jogada.get(0));
+                                    programmers.get(jogada.get(0)).removeFerramenta(2);
+                                } else {
+                                    tools.get(5).remove(jogada.get(0));
+                                    programmers.get(jogada.get(0)).removeFerramenta(5);
+                                }
+                            }
+                        }  // erro de logica - feito
+                        case 2 -> {
+                            if (!tools.get(3).contains(jogada.get(0)) && !tools.get(5).contains(jogada.get(0))) {
+                                programmers.get(jogada.get(0)).setPos(posicaoAtual - 2);
+                                explicacao = "O programador recua 2 casas.";
+                            } else {
+                                explicacao = "O abismo não tem efeito sobre ti.";
+                                if (tools.get(3).contains(jogada.get(0))) {
+                                    tools.get(3).remove(jogada.get(0));
+                                    programmers.get(jogada.get(0)).removeFerramenta(3);
+                                } else {
+                                    tools.get(5).remove(jogada.get(0));
+                                    programmers.get(jogada.get(0)).removeFerramenta(5);
+                                }
+                            }
+                        } // exception - feito
+                        case 3 -> {
+                            if (!tools.get(3).contains(jogada.get(0)) && !tools.get(5).contains(jogada.get(0))) {
+                                programmers.get(jogada.get(0)).setPos(posicaoAtual - 3);
+                                explicacao = "O programador recua 3 casas.";
+                            } else {
+                                explicacao = "O abismo não tem efeito sobre ti.";
+                                if (tools.get(3).contains(jogada.get(0))) {
+                                    tools.get(3).remove(jogada.get(0));
+                                    programmers.get(jogada.get(0)).removeFerramenta(3);
+                                } else {
+                                    tools.get(5).remove(jogada.get(0));
+                                    programmers.get(jogada.get(0)).removeFerramenta(5);
+                                }
+                            }
+                        } // file not found exception - feito
+                        case 4 -> {
+                            programmers.get(jogada.get(0)).setPos(1);
+                            explicacao = "O programador volta à primeira casa do jogo.";
+                        } // Crash (aka Rebentanço) - feito
+                        case 5 -> {
+                            if (!tools.get(0).contains(jogada.get(0))) {
+                                programmers.get(jogada.get(0)).setPos(posicaoAtual - dados);
+                                explicacao = "O programador recua até à casa onde estava antes de chegar a esta casa.";
+                            } else {
+                                explicacao = "O abismo não tem efeito sobre ti.";
+                                tools.get(0).remove(jogada.get(0));
+                                programmers.get(jogada.get(0)).removeFerramenta(0);
+                            }
+                        } // duplicated code abismo - feito
+
+                        case 6 -> {
+                            if (!tools.get(1).contains(jogada.get(0))) {
+                                programmers.get(jogada.get(0)).setPos(posicaoAtual); // jogada default
+                                explicacao = "O programador recua para a posição onde estava há 2 movimentos atrás.";
+                            } else {
+                                explicacao = "O abismo não tem efeito sobre ti.";
+                                tools.get(1).remove(jogada.get(0));
+                                programmers.get(jogada.get(0)).removeFerramenta(1);
+                            }
+                        } // efeitos secundarios abismo - por fazer
+
+                        case 7 -> {
+                            programmers.get(jogada.get(0)).setEstado("Derrotado");
+                            posID.put(jogada.get(0), programmers.get(jogada.get(0)).getPos());
+                            explicacao = "O programador perde imediatamente o jogo.";
+                            jogada.remove(0);
+                            nrTurnos++;
+                            return explicacao;
+                        } // BSOD - feito
+
+                        case 8 -> {
+                            if (!tools.get(1).contains(jogada.get(0))) {
+                                programmers.get(jogada.get(0)).setPos(posicaoAtual); // jogada default
+                                explicacao = "O programador fica preso na casa onde está até que lá apareça outro programador para o ajuda";
+                            } else {
+                                explicacao = "O abismo não tem efeito sobre ti.";
+                                tools.get(1).remove(jogada.get(0));
+                                programmers.get(jogada.get(0)).removeFerramenta(1);
+                            }
+                        } // ciclo infinito abismo - por fazer
+
+                        case 9 -> {
+                            int i = 0;
+                            ArrayList<Integer> iDs = new ArrayList<>();
+                            for (Map.Entry<Integer, Programmer> j : programmers.entrySet()) {
+                                if (abismoFerramentas.get(keyAbismoFerramenta).getPosicao() == j.getValue().getPos()) {
+                                    iDs.add(j.getValue().getId());
+                                    i++;
+                                }
+                            }
+                            if (i >= 2) {
+                                for (int id : iDs) {
+                                    programmers.get(id).setPos(posicaoAtual - 3);
+                                }
+                                explicacao = "Todos os jogadores nessa casa recuam 3 casas";
+                            } else {
+                                explicacao = "Se outro jogador cair nesta casa, recuam os dois 3 casas.";
+                            }
+                        } // Segmentation fault - feito
+                    }
+
+
+                } else {
+                    if (!tools.get(abismoFerramentas.get(keyAbismoFerramenta).getIdTipo()).contains(jogada.get(0))) {
+                        programmers.get(jogada.get(0)).setFerramentas(abismoFerramentas.get(keyAbismoFerramenta));
+                        tools.get(abismoFerramentas.get(keyAbismoFerramenta).getIdTipo()).add(jogada.get(0));
+                        switch (abismoFerramentas.get(keyAbismoFerramenta).getIdTipo()) {
+                            case 0 -> explicacao = "Herança - evita os efeitos do abismo (Duplicated code)";
+                            case 1 -> explicacao = "Programação funcional - evita os efeitos dos abismos (Efeitos secundários e Ciclo infinito)";
+                            case 2 -> explicacao = "Testes unitários - evita os efeitos do abismo (Erro de lógica)";
+                            case 3 -> explicacao = "Tratamento de excepções - evita os efeitos dos abismos (Exception e File not found exception)";
+                            case 4 -> explicacao = "IDE - evita os efeitos do abismo (Erro de sintaxe)";
+                            case 5 -> explicacao = "Ajuda do professor - tem o mesmo efeito que as seguintes ferramentas (Testes unitários, IDE e Tratamento de excepções)";
+                        }
+                    } else {
+                        explicacao = "Já existe uma ferramenta igual a esta";
+                    }
+                }
         }
         posID.put(jogada.get(0), programmers.get(jogada.get(0)).getPos());
         jogada.add(jogada.remove(0));
