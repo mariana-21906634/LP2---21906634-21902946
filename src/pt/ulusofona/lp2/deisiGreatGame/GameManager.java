@@ -1,12 +1,10 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
-import javax.naming.InterruptedNamingException;
 import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class GameManager {
@@ -446,7 +444,27 @@ public class GameManager {
                         } // Segmentation fault - feito
 
                         case 10 ->{
-                            int media = 0;
+                            explicacao = "O jogador recua a media das ultimas casas.";
+                            float media = 0;
+                            List<Integer> sublista = new ArrayList<>();
+                            sublista = programmers.get(jogada.get(0)).getPosicoes().subList(Math.max(programmers.
+                                    get(jogada.get(0)).getPosicoes().size()-3,0),programmers.get(jogada.get(0)).getPosicoes().size());   //estou a ir buscar os ultimos 3 items do array
+                            if(programmers.get(jogada.get(0)).getPosicoes().size()>=3){
+                                 for(int i : sublista ){
+                                     media += i;
+                                 }
+                                 media = media / 3;
+                                programmers.get(jogada.get(0)).setPos((int) Math.ceil(media));                   //vai por a posicao dele
+                             }else if(programmers.get(jogada.get(0)).getPosicoes().size()==2){
+                                for(int i : sublista ){
+                                    media += i;
+                                }
+                                media = media / 2;
+                                programmers.get(jogada.get(0)).setPos((int) Math.ceil(media));
+                             }else{
+                                media = sublista.get(0);
+                                programmers.get(jogada.get(0)).setPos((int) Math.ceil(media));
+                             }
 
                         }
                     }

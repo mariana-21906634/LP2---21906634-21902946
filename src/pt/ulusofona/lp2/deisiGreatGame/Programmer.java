@@ -11,6 +11,7 @@ public class Programmer {
     HashMap<Integer,AbyssOrTool> ferramentas = new HashMap<>();
     ArrayList<Integer> posicoes = new ArrayList<>();
 
+
     public Programmer(){}
 
     public Programmer(int id, String name, String linguagemFavorita, String color) {
