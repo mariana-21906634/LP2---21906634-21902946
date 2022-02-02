@@ -336,9 +336,9 @@ public class GameManager {
                             }
                         } // erro de sintaxe - feito
                         case 1 -> {
-                            if (!tools.get(2).contains(jogada.get(0)) || !tools.get(5).contains(jogada.get(0))) {
+                            if (!tools.get(2).contains(jogada.get(0)) && !tools.get(5).contains(jogada.get(0))) {
                                 int dado = dados / 2;
-                                programmers.get(jogada.get(0)).setPos(posicaoAtual - (int) Math.floor(dado));
+                                programmers.get(jogada.get(0)).setPos(posicaoAtual - dado);
                                 explicacao = "Recua " + dado + " casa(s)";
                             } else {
                                 if (tools.get(2).contains(jogada.get(0))) {
@@ -450,7 +450,6 @@ public class GameManager {
 
                         }
                     }
-
 
                 } else {
                     if (!tools.get(abismoFerramentas.get(keyAbismoFerramenta).getIdTipo()).contains(jogada.get(0))) {

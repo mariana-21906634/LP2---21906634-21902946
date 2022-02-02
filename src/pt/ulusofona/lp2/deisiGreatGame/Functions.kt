@@ -27,7 +27,7 @@ fun functionGet(game:GameManager, list: List<String>): String?{
 }
 
 fun player(game: GameManager,list: List<String>): String?{
-    return null
+    return ""
 }
 
 fun playerByLanguage(game: GameManager,list: String): String?{
