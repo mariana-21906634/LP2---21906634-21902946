@@ -34,6 +34,7 @@ public class GameManager {
         for (String[] player : playerInfo) {
             programmers.put(Integer.parseInt(player[0]), new Programmer(Integer.parseInt(player[0]), player[1], player[2], player[3]));
             jogada.add(Integer.parseInt(player[0]));
+            posID.put(Integer.parseInt(player[0]), 1);
         }
         Collections.sort(jogada);
     }  //FEITO
@@ -262,6 +263,7 @@ public class GameManager {
                     programadores.add(programmers.get(programmer.getKey()));
                 }
             }
+            System.out.println(programadores.size());
             return programadores;
     }  //FEITO
 
@@ -317,8 +319,6 @@ public class GameManager {
                     keyAbismoFerramenta = abismoFerramenta.getKey();
                 }
             }
-
-
                 if (abismoFerramentas.get(keyAbismoFerramenta).getId() == 0) {
                     switch (abismoFerramentas.get(keyAbismoFerramenta).getIdTipo()) {
                         case 0 -> {
@@ -342,6 +342,7 @@ public class GameManager {
                                 programmers.get(jogada.get(0)).setPos(posicaoAtual - dado);
                                 explicacao = "Recua " + dado + " casa(s)";
                             } else {
+                                explicacao = "O abismo não tem efeito sobre ti.";
                                 if (tools.get(2).contains(jogada.get(0))) {
                                     tools.get(2).remove(jogada.get(0));
                                     programmers.get(jogada.get(0)).removeFerramenta(2);
