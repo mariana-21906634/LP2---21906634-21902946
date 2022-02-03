@@ -65,6 +65,8 @@ public class GameManager {
                 abismoFerramentas.put(x, objeto);
                 x++;
             }
+            //AbyssOrTool objeto = new AbyssOrTool(0,  , );
+            //abismoFerramentas.put(x, objeto);
         }
         createInitialBoard(playerInfo, worldSize);
     }  //FEITO
@@ -293,6 +295,7 @@ public class GameManager {
         if(nrSpaces < 1 || nrSpaces > 6){
             return false;
         }
+        dados = nrSpaces;
         if(tamanhoTab < momentoAtual + nrSpaces){
             aux = tamanhoTab-momentoAtual-nrSpaces;
             programmers.get(jogada.get(0)).setPos(tamanhoTab-Math.abs(aux));
