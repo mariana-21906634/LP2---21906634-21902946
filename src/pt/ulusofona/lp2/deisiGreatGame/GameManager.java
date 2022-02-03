@@ -486,6 +486,7 @@ public class GameManager {
                     }
                 }
         }
+        programmers.get(jogada.get(0)).setPosicoes(programmers.get(jogada.get(0)).getPos());
         posID.put(jogada.get(0), programmers.get(jogada.get(0)).getPos());
         jogada.add(jogada.remove(0));
         nrTurnos++;
