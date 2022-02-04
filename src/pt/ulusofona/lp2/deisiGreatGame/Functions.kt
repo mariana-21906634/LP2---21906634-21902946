@@ -1,6 +1,7 @@
 package pt.ulusofona.lp2.deisiGreatGame
 
 import pt.ulusofona.lp2.deisiGreatGame.CommandType.*
+import java.util.stream.Collectors
 
 enum class CommandType{GET,POST}
 
@@ -18,7 +19,7 @@ fun escolhaComando(commandType: CommandType):(GameManager,List<String>) -> Strin
 fun functionGet(game:GameManager, list: List<String>): String?{
     when (list[0]) {
         "PLAYER" -> return player(game,list)
-        "PLAYER_BY_LANGUAGE" -> return playerByLanguage(game,list[1])
+        "PLAYER_BY_LANGUAGE" -> return playerByLanguage(game,list)
         "POLYGLOTS" -> return polyglots(game)
         "MOST_USED_POSITIONS" -> return mostUsedPositions(game, list)
         "MOST_USED_ABYSSES" -> return mostUsedAbysses(game, list)
@@ -27,15 +28,20 @@ fun functionGet(game:GameManager, list: List<String>): String?{
 }
 
 fun player(game: GameManager,list: List<String>): String?{
-    return ""
+    return game.programmers.values.stream().filter { p -> p.getName().contains(list[1])}.findAny().map(Programmer::name)
+        .orElse("Inexistent player")
 }
 
-fun playerByLanguage(game: GameManager,list: String): String?{
-    return null
+fun playerByLanguage(game: GameManager,list: List<String>): String?{
+    return game.programmers.values.stream().filter { p -> p.getLinguagemFavorita().split("; ")
+        .contains(list[1])}.map(Programmer :: name).collect(Collectors.joining(";"))
 }
 
 fun polyglots(game: GameManager): String?{
-    return null
+    return game.programmers.values.stream().filter { p -> p.getLinguagemFavorita().split("; ")
+        .count() > 1 }.sorted { o1, o2 -> o1.getLinguagemFavorita().split("; ").count().
+    compareTo(o2.getLinguagemFavorita().split("; ").count()) }.map { a -> a.getName() +  ":" +
+            a.getLinguagemFavorita().split("; ").count() + "\n"}.collect(Collectors.joining()).trim()
 }
 
 fun mostUsedPositions(game: GameManager,list: List<String>): String?{
