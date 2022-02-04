@@ -1,0 +1,32 @@
+79
+1
+0
+0 : 1 : 10
+0 : 1 : 11
+0 : 1 : 12
+0 : 1 : 13
+1 : 5 : 2
+1 : 5 : 3
+1 : 5 : 4
+1 : 5 : 5
+1 : 5 : 6
+0 : 2 : 67
+0 : 3 : 68
+0 : 4 : 36
+0 : 6 : 39
+0 : 7 : 40
+0 : 8 : 9
+0 : 9 : 10
+0 : 10 : 19
+1 : Joshua Bloch : C; C#; Java; Python : PURPLE : 1 : Em Jogo : Nenhuma Ferramenta
+2 : Guido van Rossum : C; Common Lisp; Python : BLUE : 1 : Em Jogo : Nenhuma Ferramenta
+3 : Ada Lovelace : Ada; C,C# : GREEN : 1 : Em Jogo : Nenhuma Ferramenta
+0f
+1f
+2f
+3f
+4f
+5f
+1
+2
+3
