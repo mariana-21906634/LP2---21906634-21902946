@@ -93,4 +93,5 @@ public class TestMoveCurrentPlayer {
         boolean esperado = true;
         assertEquals("Expected result is " + esperado + "but was " + atual, esperado, atual);
     }
+
 }

@@ -42,7 +42,7 @@ fun player(game: GameManager,list: List<String>): String?{
 
 fun playerByLanguage(game: GameManager,list: List<String>): String?{
     return game.programmers.values.stream().filter { p -> p.getLinguagemFavorita().split("; ")
-        .contains(list[1])}.map(Programmer :: name).collect(Collectors.joining(";"))
+        .contains(list[1])}.map(Programmer :: name).collect(Collectors.joining(","))
 }
 
 fun polyglots(game: GameManager): String?{
