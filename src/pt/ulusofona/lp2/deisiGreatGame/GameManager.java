@@ -406,6 +406,7 @@ public class GameManager {
                                 tools.get(1).remove(jogada.get(0));
                                 programmers.get(jogada.get(0)).removeFerramenta(1);
                             }
+
                         } // efeitos secundarios abismo - por fazer
 
                         case 7 -> {
