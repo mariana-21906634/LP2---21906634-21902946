@@ -98,7 +98,7 @@ public class Programmer {
             return this.id + " | " + this.name + " | " + this.pos + " | No tools | " + this.linguagemFavorita + " | " + this.estado;
         }
         String muitasFerramentas = "";
-        System.out.println("DB: "+ferramentas.values().size());
+        System.out.println("DB: "+ferramentas.values().size());  //teste
         for(AbyssOrTool at: this.ferramentas.values()){
             muitasFerramentas+= at.getNome()+" | ";
         }

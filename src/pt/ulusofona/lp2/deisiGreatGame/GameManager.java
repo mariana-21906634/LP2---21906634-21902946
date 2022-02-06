@@ -22,7 +22,7 @@ public class GameManager {
 
     }
 
-    public void createInitialBoard(String[][] playerInfo, int boardSize) throws InvalidInitialBoardException{
+    public void createInitialBoard(String[][] playerInfo, int boardSize) throws InvalidInitialBoardException{           //playerInfo [0]- id do jogador [1] - nome do jogador [2] - lista linguagensfavoritas, separadas por ;  [3] - cor do boneco
         reset();
         if(playerInfo.length < 2 || playerInfo.length > 4){
             throw new InvalidInitialBoardException("O número de jogadores é inválido");
@@ -31,7 +31,7 @@ public class GameManager {
             throw new InvalidInitialBoardException("O tamanho do tabuleiro é inválido");
         }
         tamanhoTab = boardSize;
-        for (String[] player : playerInfo) {
+        for (String[] player : playerInfo) {    //*
             programmers.put(Integer.parseInt(player[0]), new Programmer(Integer.parseInt(player[0]), player[1], player[2], player[3]));
             jogada.add(Integer.parseInt(player[0]));
             posID.put(Integer.parseInt(player[0]), 1);
@@ -225,9 +225,9 @@ public class GameManager {
             }
 
         }
-        for (Map.Entry<Integer, AbyssOrTool> abismoFerramenta : abismoFerramentas.entrySet()) {
-            if (abismoFerramenta.getValue().getPosicao() == position) {
-                return abismoFerramenta.getValue().images();
+        for (Map.Entry<Integer, AbyssOrTool> abismoFerramenta : abismoFerramentas.entrySet()) {   //vai percorrer todos os abismos e ferramentos
+            if (abismoFerramenta.getValue().getPosicao() == position) {  //vai verificar se na posicao tem um abismo ou ferramenta
+                return abismoFerramenta.getValue().images();  //vai retornar a imagem do abismo ou ferramenta
             }
         }
         return "blank.png";
@@ -258,9 +258,9 @@ public class GameManager {
 
     public List<Programmer> getProgrammers(int position){
         ArrayList<Programmer> programadores = new ArrayList<>();
-            for (Map.Entry<Integer, Integer> programmer : posID.entrySet()) {
+            for (Map.Entry<Integer, Integer> programmer : posID.entrySet()) {     //percorrer o hashmap posid, onde esta o id e a posicao do jogador
                 if(programmer.getValue()==position){
-                    programadores.add(programmers.get(programmer.getKey()));
+                    programadores.add(programmers.get(programmer.getKey()));   //vai adicionar ao array o id do jogador
                 }
             }
             System.out.println(programadores.size());
@@ -288,23 +288,23 @@ public class GameManager {
     }
 
     public int getCurrentPlayerID(){
-        return jogada.get(0);
+        return jogada.get(0);   //Devolve o ID do programador que se encontra activo no turno actual.
     }  //FEITO
 
     public boolean moveCurrentPlayer(int nrSpaces){
         int momentoAtual = programmers.get(jogada.get(0)).getPos();
-        int aux;
+        int aux;  //posicao apos jogada excessiva
         if(nrSpaces < 1 || nrSpaces > 6){
             return false;
         }
         dados = nrSpaces;
-        if(tamanhoTab < momentoAtual + nrSpaces){
+        if(tamanhoTab < momentoAtual + nrSpaces){  //quando a jogada mais a posicao fica maior que o tabuleiro e o jogador tem que andar para tras
             aux = tamanhoTab-momentoAtual-nrSpaces;
-            programmers.get(jogada.get(0)).setPos(tamanhoTab-Math.abs(aux));
+            programmers.get(jogada.get(0)).setPos(tamanhoTab-Math.abs(aux));  // vai colocar o jogador na posicao
         }else{
-            programmers.get(jogada.get(0)).setPos(momentoAtual+nrSpaces);
+            programmers.get(jogada.get(0)).setPos(momentoAtual+nrSpaces);  // vai colocar o jogador na posicao
         }
-        posID.put(jogada.get(0), programmers.get(jogada.get(0)).getPos());
+        posID.put(jogada.get(0), programmers.get(jogada.get(0)).getPos());   //atualiza o posId com a posicao nova
         return true;
     }
 
@@ -500,14 +500,14 @@ public class GameManager {
 
     public boolean gameIsOver(){
         int i = 0;
-        for(Map.Entry<Integer, Integer> programa : posID.entrySet()){
-            if(programa.getValue()==tamanhoTab){
-                winner = programmers.get(programa.getKey());
+        for(Map.Entry<Integer, Integer> programa : posID.entrySet()){    // vai percorrer as posicoes atuais dos jogadores
+            if(programa.getValue()==tamanhoTab){  //vai verificar se o jogador esta na ultima casa
+                winner = programmers.get(programa.getKey());  //colocar o jogador como vencedor
                 return true;
             }
         }
-        for (Map.Entry<Integer, Programmer> jogo : programmers.entrySet()) {
-            if (jogo.getValue().getEstado().equals("Em Jogo")) {
+        for (Map.Entry<Integer, Programmer> jogo : programmers.entrySet()) {  // vai percorrer todos os jogadores em jogo
+            if (jogo.getValue().getEstado().equals("Em Jogo")) {  //estado "em jogo" ocorre durante o jogo inteiro, so acaba quando entra no if anterior
                 i++;
             }
         }
@@ -532,10 +532,10 @@ public class GameManager {
         Collections.sort(posicao);
         Collections.reverse(posicao);
         for (Integer pos : posicao) {
-            for (Map.Entry<Integer, Programmer> prog : programmers.entrySet()) {
-                if (prog.getValue().getPos() == pos && !prog.getValue().getName().equals(winner.getName())) {
-                    if (!gameResults.contains(prog.getValue().getName() + " " + pos)) {
-                        gameResults.add(prog.getValue().getName() + " " + pos);
+            for (Map.Entry<Integer, Programmer> prog : programmers.entrySet()) {    //percorrer os programadores
+                if (prog.getValue().getPos() == pos && !prog.getValue().getName().equals(winner.getName())) {   // vai verificar se o programador em questao é o vencedor
+                    if (!gameResults.contains(prog.getValue().getName() + " " + pos)) {  // vai verificar se o jogador em questao ja esta escrito
+                        gameResults.add(prog.getValue().getName() + " " + pos);  // vai escrever o jogador
                     }
                 }
             }
