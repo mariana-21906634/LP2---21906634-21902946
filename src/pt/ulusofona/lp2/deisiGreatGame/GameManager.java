@@ -11,7 +11,7 @@ public class GameManager {
 
     HashMap<Integer, AbyssOrTool> abismoFerramentas = new HashMap();
     HashMap<Integer, Programmer> programmers = new HashMap<>();
-    HashMap<Integer, ArrayList<Integer>> tools = new HashMap<>();
+    HashMap<Integer, ArrayList<Integer>> tools = new HashMap<>();  //*
     HashMap<Integer, Integer> posID = new HashMap<>();
     ArrayList<Integer> jogada = new ArrayList<>();
     int tamanhoTab, nrTurnos, dados;
@@ -43,7 +43,7 @@ public class GameManager {
 
         abismoFerramentas.clear();
         tools.clear();
-        tools.put(0, new ArrayList<>());
+        tools.put(0, new ArrayList<>());  //primeira posicao é o id e o array é as posicoes em que esse id está
         tools.put(1, new ArrayList<>());
         tools.put(2, new ArrayList<>());
         tools.put(3, new ArrayList<>());
@@ -53,21 +53,19 @@ public class GameManager {
             int x = 0;
             for (String[] aux : abyssesAndTools) {  // aux = abismo ou ferramenta
                 //validar sub type id lido
-                if (Integer.parseInt(aux[0]) == 0 && (Integer.parseInt(aux[1])<0 || Integer.parseInt(aux[1])>10)){
+                if (Integer.parseInt(aux[0]) == 0 && (Integer.parseInt(aux[1])<0 || Integer.parseInt(aux[1])>10)){  //se for um abismo nao pode ter um id menor que 0  e maior que 10
                     throw new InvalidInitialBoardException("O abismo é inválido", aux[1], true, false );
                 }
-                if (Integer.parseInt(aux[0]) == 1 && (Integer.parseInt(aux[1])<0 || Integer.parseInt(aux[1])>5)){
+                if (Integer.parseInt(aux[0]) == 1 && (Integer.parseInt(aux[1])<0 || Integer.parseInt(aux[1])>5)){  //se for uma ferramenta nao pode ter um id menor que 0 e maior que 5
                     throw new InvalidInitialBoardException("A ferramenta é inválida", aux[1], false, true);
                 }
-                if (Integer.parseInt(aux[0]) > 1 || Integer.parseInt(aux[0]) < 0 || Integer.parseInt(aux[2]) > worldSize) {
+                if (Integer.parseInt(aux[0]) > 1 || Integer.parseInt(aux[0]) < 0 || Integer.parseInt(aux[2]) > worldSize) {  // se o id do abismo ou ferramenta for maior que 1 ou menor que 0 e a posicao for maior que o tamanho do tabuleiro
                     throw new InvalidInitialBoardException("O abismo ou uma ferramenta está inválida", aux[1], false, false);
                 }
                 AbyssOrTool objeto = new AbyssOrTool(Integer.parseInt(aux[0]), Integer.parseInt(aux[1]), Integer.parseInt(aux[2]));
                 abismoFerramentas.put(x, objeto);
                 x++;
             }
-            //AbyssOrTool objeto = new AbyssOrTool(0,  , );
-            //abismoFerramentas.put(x, objeto);
         }
         createInitialBoard(playerInfo, worldSize);
     }  //FEITO
@@ -234,9 +232,9 @@ public class GameManager {
     }  //FEITO
 
     public String getTitle(int position){
-        for (Map.Entry<Integer, AbyssOrTool> abismoFerramenta : abismoFerramentas.entrySet()) {
-            if (abismoFerramenta.getValue().getPosicao() == position) {
-                return abismoFerramenta.getValue().getNome();
+        for (Map.Entry<Integer, AbyssOrTool> abismoFerramenta : abismoFerramentas.entrySet()) {   //vai percorrer os abismos e as ferramentas todas
+            if (abismoFerramenta.getValue().getPosicao() == position) {  //verifica se o abismo ou a ferramenta está na posicao passada no parametro
+                return abismoFerramenta.getValue().getNome();  //retorna o nome
             }
         }
         return null;
@@ -244,13 +242,13 @@ public class GameManager {
 
     public List<Programmer> getProgrammers(boolean includeDefeated){
         List<Programmer> undefeated = new ArrayList<>();
-        if (includeDefeated) {
-            ArrayList<Programmer> programa = new ArrayList<>(programmers.values());
+        if (includeDefeated) {     //se o incLudeDefeated for true
+            ArrayList<Programmer> programa = new ArrayList<>(programmers.values());  // vou criar um progrma e adiciono todos od programadores que ja estiveram ou estao em jogo
             return programa;
         }
-        for (Map.Entry<Integer, Programmer> jogo : programmers.entrySet()) {
-            if (jogo.getValue().getEstado().equals("Em Jogo")) {
-                undefeated.add(jogo.getValue());
+        for (Map.Entry<Integer, Programmer> jogo : programmers.entrySet()) {  //percorrer todos os programadores
+            if (jogo.getValue().getEstado().equals("Em Jogo")) {  //verificar se o estado do programador é em jogo
+                undefeated.add(jogo.getValue());  // adiciono ao List derrotados
             }
         }
         return undefeated;
@@ -269,19 +267,19 @@ public class GameManager {
 
     public String getProgrammersInfo(){
         StringBuilder informacao = new StringBuilder();
-        for(Map.Entry<Integer, Programmer> programmer : programmers.entrySet()){
-            if(informacao.length() == 0){
-                informacao.append(programmer.getValue().getName()).append(" : ");
+        for(Map.Entry<Integer, Programmer> programmer : programmers.entrySet()){   //percorrer todos os programadores ordenados
+            if(informacao.length() == 0){   //verificar se a informacao está vazia
+                informacao.append(programmer.getValue().getName()).append(" : ");  //escrever o "nome :"  do primeiro jogador ; passa para o proximo if
             }else{
-                informacao.append(" | ").append(programmer.getValue().getName()).append(" : ");
+                informacao.append(" | ").append(programmer.getValue().getName()).append(" : ");  //caso ja haja algum jogador, é escrito " | nome : " do jogador a seguir
             }
             if(programmer.getValue().getFerramentas().isEmpty()){
-                informacao.append("No tools");
+                informacao.append("No tools");  // caso o jogador nao tenha ferramentas
             }else{
                 for(Map.Entry<Integer, AbyssOrTool> ferramentas : programmer.getValue().getFerramentas().entrySet()){
-                    informacao.append(ferramentas.getValue().getNome()).append(";");
+                    informacao.append(ferramentas.getValue().getNome()).append(";");  //escrever as ferramentas separadas por ;
                 }
-                informacao.deleteCharAt(informacao.length()-1);
+                informacao.deleteCharAt(informacao.length()-1); //retirar o ; a mais
             }
         }
         return informacao.toString();
@@ -314,28 +312,28 @@ public class GameManager {
         String explicacao = null;
         if (getTitle(posicaoAtual) != null) {
 
-            for (Map.Entry<Integer, AbyssOrTool> abismoFerramenta : abismoFerramentas.entrySet()) {                    //guardar a key do abismo ou ferramenta onde o player ta
-                if (abismoFerramenta.getValue().getPosicao() == programmers.get(jogada.get(0)).getPos()) {
-                    keyAbismoFerramenta = abismoFerramenta.getKey();
+            for (Map.Entry<Integer, AbyssOrTool> abismoFerramenta : abismoFerramentas.entrySet()) {   //vai percorrer todos os abismos e ferramentas , guardar a key do abismo ou ferramenta onde o player ta
+                if (abismoFerramenta.getValue().getPosicao() == programmers.get(jogada.get(0)).getPos()) {  //se a posicao do programador for igual à posicao do abirmos/ferramenta
+                    keyAbismoFerramenta = abismoFerramenta.getKey();   //o keyabismoferramenta identifica se é um abismo ou uma ferramenta
                 }
             }
-                if (abismoFerramentas.get(keyAbismoFerramenta).getId() == 0) {
-                    switch (abismoFerramentas.get(keyAbismoFerramenta).getIdTipo()) {
-                        case 0 -> {
-                            if (!tools.get(4).contains(jogada.get(0)) && !tools.get(5).contains(jogada.get(0))) {
-                                programmers.get(jogada.get(0)).setPos(posicaoAtual - 1);
+                if (abismoFerramentas.get(keyAbismoFerramenta).getId() == 0) {  //se for um abismo
+                    switch (abismoFerramentas.get(keyAbismoFerramenta).getIdTipo()) {  //verifica o id do abismo
+                        case 0 -> {  //se for um erro de sintaxe
+                            if (!tools.get(4).contains(jogada.get(0)) && !tools.get(5).contains(jogada.get(0))) {  //nao tem ferramenta com o id 4 nem 5
+                                programmers.get(jogada.get(0)).setPos(posicaoAtual - 1); //vai recuar uma casa ao programador
                                 explicacao = "O programador recua 1 casa.";
                             } else {
                                 explicacao = "O abismo não tem efeito sobre ti.";
-                                if (tools.get(4).contains(jogada.get(0))) {
-                                    tools.get(4).remove(jogada.get(0));
-                                    programmers.get(jogada.get(0)).removeFerramenta(4);
+                                if (tools.get(4).contains(jogada.get(0))) {  //tem uma ferramenta com o id 4 (IDE)
+                                    tools.get(4).remove(jogada.get(0));  //remove a ferramenta da posicao atual
+                                    programmers.get(jogada.get(0)).removeFerramenta(4);  //remove a ferramenta ao programador
                                 } else {
-                                    tools.get(5).remove(jogada.get(0));
-                                    programmers.get(jogada.get(0)).removeFerramenta(5);
+                                    tools.get(5).remove(jogada.get(0));  //remove a ferramenta com o id 5 (ajuda do professor) da posicao
+                                    programmers.get(jogada.get(0)).removeFerramenta(5);  //remove a ferramenta ao programador
                                 }
                             }
-                        } // erro de sintaxe - feito
+                        } // erro de sintaxe
                         case 1 -> {
                             if (!tools.get(2).contains(jogada.get(0)) && !tools.get(5).contains(jogada.get(0))) {
                                 int dado = dados / 2;
@@ -396,10 +394,9 @@ public class GameManager {
                                 programmers.get(jogada.get(0)).removeFerramenta(0);
                             }
                         } // duplicated code abismo - feito
-
                         case 6 -> {
                             if (!tools.get(1).contains(jogada.get(0))) {
-                                programmers.get(jogada.get(0)).setPos(posicaoAtual); // jogada default
+                                programmers.get(jogada.get(0)).setPos(posicaoAtual);    // jogada default *******
                                 explicacao = "O programador recua para a posição onde estava há 2 movimentos atrás.";
                             } else {
                                 explicacao = "O abismo não tem efeito sobre ti.";
@@ -408,7 +405,6 @@ public class GameManager {
                             }
 
                         } // efeitos secundarios abismo - por fazer
-
                         case 7 -> {
                             programmers.get(jogada.get(0)).setEstado("Derrotado");
                             posID.put(jogada.get(0), programmers.get(jogada.get(0)).getPos());
@@ -417,7 +413,6 @@ public class GameManager {
                             nrTurnos++;
                             return explicacao;
                         } // BSOD - feito
-
                         case 8 -> {
                             if (!tools.get(1).contains(jogada.get(0))) {
                                 programmers.get(jogada.get(0)).setPos(posicaoAtual); // jogada default
@@ -428,33 +423,31 @@ public class GameManager {
                                 programmers.get(jogada.get(0)).removeFerramenta(1);
                             }
                         } // ciclo infinito abismo - por fazer
-
                         case 9 -> {
-                            int i = 0;
+                            int i = 0;  //numero de jogadores na casa
                             ArrayList<Integer> iDs = new ArrayList<>();
-                            for (Map.Entry<Integer, Programmer> j : programmers.entrySet()) {
-                                if (abismoFerramentas.get(keyAbismoFerramenta).getPosicao() == j.getValue().getPos()) {
-                                    iDs.add(j.getValue().getId());
-                                    i++;
+                            for (Map.Entry<Integer, Programmer> j : programmers.entrySet()) {  // percorrer a lista de programadores
+                                if (abismoFerramentas.get(keyAbismoFerramenta).getPosicao() == j.getValue().getPos()) {  //se o jogador esta na posicao do abismo
+                                    iDs.add(j.getValue().getId());  //adiciona o id À lista de ids
+                                    i++;  //adiciona 1 jogador
                                 }
                             }
-                            if (i >= 2) {
+                            if (i >= 2) {  //verifica se ha mais que ha mias que um jogador
                                 for (int id : iDs) {
-                                    programmers.get(id).setPos(posicaoAtual - 3);
+                                    programmers.get(id).setPos(posicaoAtual - 3);  //recurram todos 3 casas
                                 }
                                 explicacao = "Todos os jogadores nessa casa recuam 3 casas";
                             } else {
                                 explicacao = "Se outro jogador cair nesta casa, recuam os dois 3 casas.";
                             }
                         } // Segmentation fault - feito
-
                         case 10 ->{
                             explicacao = "O jogador recua a media das ultimas casas.";
                             float media = 0;
                             List<Integer> sublista = new ArrayList<>();
                             sublista = programmers.get(jogada.get(0)).getPosicoes().subList(Math.max(programmers.
-                                    get(jogada.get(0)).getPosicoes().size()-3,0),programmers.get(jogada.get(0)).getPosicoes().size());//estou a ir buscar os ultimos 3 items do array
-                            if(programmers.get(jogada.get(0)).getPosicoes().size()>=3){
+                                    get(jogada.get(0)).getPosicoes().size()-3,0),programmers.get(jogada.get(0)).getPosicoes().size());    //estou a ir buscar os ultimos 3 items do array
+                            if(programmers.get(jogada.get(0)).getPosicoes().size()>=3){   //se a sublista tem pelo menos 3 valores
                                  for(int i : sublista ){
                                      media += i;
                                  }
@@ -475,9 +468,9 @@ public class GameManager {
                     }
 
                 } else {
-                    if (!tools.get(abismoFerramentas.get(keyAbismoFerramenta).getIdTipo()).contains(jogada.get(0))) {
-                        programmers.get(jogada.get(0)).setFerramentas(abismoFerramentas.get(keyAbismoFerramenta));
-                        tools.get(abismoFerramentas.get(keyAbismoFerramenta).getIdTipo()).add(jogada.get(0));
+                    if (!tools.get(abismoFerramentas.get(keyAbismoFerramenta).getIdTipo()).contains(jogada.get(0))) {  //se nao tem uma ferramenta naquela posicao
+                        programmers.get(jogada.get(0)).setFerramentas(abismoFerramentas.get(keyAbismoFerramenta));  //o jogador fica com a ferramenta
+                        tools.get(abismoFerramentas.get(keyAbismoFerramenta).getIdTipo()).add(jogada.get(0));  //a ferramenta fica com o jogador mas "nasce" outra no mesmo sitio
                         switch (abismoFerramentas.get(keyAbismoFerramenta).getIdTipo()) {
                             case 0 -> explicacao = "Herança - evita os efeitos do abismo (Duplicated code)";
                             case 1 -> explicacao = "Programação funcional - evita os efeitos dos abismos (Efeitos secundários e Ciclo infinito)";
@@ -491,9 +484,9 @@ public class GameManager {
                     }
                 }
         }
-        programmers.get(jogada.get(0)).setPosicoes(programmers.get(jogada.get(0)).getPos());
-        posID.put(jogada.get(0), programmers.get(jogada.get(0)).getPos());
-        jogada.add(jogada.remove(0));
+        programmers.get(jogada.get(0)).setPosicoes(programmers.get(jogada.get(0)).getPos());  //guarda a posicao num array lis que contem todas as posicoes desse jogador
+        posID.put(jogada.get(0), programmers.get(jogada.get(0)).getPos());  //guarda o id do jogador e posicao em que esta
+        jogada.add(jogada.remove(0)); //******
         nrTurnos++;
         return explicacao;
     }
@@ -553,6 +546,5 @@ public class GameManager {
         posID.clear();
         nrTurnos = 1;
     }  //FEITO
-
 
 }
